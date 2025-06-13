@@ -1,0 +1,41 @@
+TripNest- Your Travel Partner
+
+A)Home Page
+
+Search bar (From, To, Date)
+
+Tabs: Flights | Trains | Buses | Hotels | Visa Help
+
+Trending Destinations
+
+Theme-based (Adventure, Honeymoon, Beach, etc.)
+
+Trending Packages (Cards)
+
+International / Domestic toggle
+
+Testimonials
+
+Footer (contact, about, links)
+
+
+B) Flights Page
+
+Flight search 
+
+Book button 
+
+Recommended 
+
+12/06/25
+Home icon - rupees/dollars, language
+Change Flights and all into single thing called Transport make a dropdown menu
+add login button
+when we click a Package it should showthe details,modifications and also terms and conditions
+image gallery of activities and all
+premium,with flight without flight,no of persons,accomodations,price
+customizability
+gitlens
+stash
+
+Unsplash Access Key - 6U7_da4mEtaUxpQtED8J3mo2wXp5aOwp6DUjJemhaIY
