@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/destinations.css" />
+    <title>Destination Details</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar">
+        <img src="/images/Logo.png" alt="Logo" class="logo" />
+        <ul class="menu">
+          <li class="item">
+            <a href="/Pages/agent-register.html" class="agent-link"
+              >Travel Agent?Join US</a
+            >
+          </li>
+          <li class="item"><a href="/Pages/home.html">Home</a></li>
+          <li class="item"><a href="#Packages">Packages</a></li>
+          <li class="item"><a href="#Offers">Offers</a></li>
+          <li class="item"><a href="#contact">Contact</a></li>
+          <button class="btn login-btn">Login</button>
+        </ul>
+      </nav>
+    </header>
+    <!-- HeroSection -->
+    <header class="hero">
+      <div class="slider">
+        <img src="/images/italy.jpg" alt="Slide 1" />
+        <img src="/images/italy2.jpg" alt="Slide 2" />
+        <img src="/images/italy3.jpg" alt="Slide 3" />
+      </div>
+      <div class="overlay" id="destination-herotext">
+        <h1>Lake como, Italy</h1>
+        <p>Home to romantic villas and revamped waterfront promenades</p>
+      </div>
+    </header>
+    <main>
+      <!-- <div class="package-image">
+        <img src="/images/hero-place2.jpg" alt="Goa Beach" />
+      </div> -->
+      <!-- Package-details -->
+      <section class="package-details">
+        <h2>Package Details</h2>
+        <p><strong>Duration:</strong> 5 Days / 4 Nights</p>
+        <ul>
+          <li>🏞 Scenic tours and local experiences</li>
+          <li>🏨 Comfortable accommodation</li>
+          <li>🚍 Guided transport</li>
+        </ul>
+      </section>
+
+      <!-- Customization Options -->
+      <section class="package-details">
+        <h2>Customize Your Package</h2>
+        <form class="customization-form">
+          <label for="hotel">Hotel Type:</label>
+          <select id="hotel" name="hotel">
+            <option value="3star">3 Star</option>
+            <option value="4star">4 Star</option>
+            <option value="5star">5 Star</option>
+          </select>
+
+          <label for="food">Food Preference:</label>
+          <select id="food" name="food">
+            <option value="veg">Vegetarian</option>
+            <option value="nonveg">Non-Vegetarian</option>
+            <option value="both">Both</option>
+          </select>
+
+          <label for="transport">Transport Mode:</label>
+          <select id="transport" name="transport">
+            <option value="flight">Flight</option>
+            <option value="train">Train</option>
+            <option value="bus">Bus</option>
+          </select>
+
+          <button type="submit" id="customization-id">
+            Confirm Customization
+          </button>
+        </form>
+      </section>
+      <section class="package-details">
+        <h2>Price & Inclusions</h2>
+        <p><strong>Total Cost:</strong> ₹75,000 per person</p>
+        <ul>
+          <li>✅ Daily breakfast & dinner</li>
+          <li>✅ Entry tickets for attractions</li>
+          <li>✅ Airport pickup & drop</li>
+        </ul>
+      </section>
+
+      <section class="package-details">
+        <h2>What’s Not Included</h2>
+        <ul>
+          <li>❌ Airfare from home city (unless selected)</li>
+          <li>❌ Personal expenses</li>
+          <li>❌ Travel Insurance</li>
+        </ul>
+      </section>
+
+      <section class="package-details">
+        <h2>Book Your Package</h2>
+        <form class="customization-form">
+          <label for="name">Full Name:</label>
+          <input type="text" id="name" required />
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" placeholder="xyz@gmail.com" required />
+
+          <label for="travel-date">Preferred Travel Date: (From)</label>
+          <input type="date" id="travel-date" required />
+
+          <label for="travel-date">Preferred Travel Date: (To)</label>
+          <input type="date" id="travel-date" required />
+
+          <button type="submit">Book Now</button>
+        </form>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p>&copy; 2025 Traverzy. All Rights Reserved</p>
+      <p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </p>
+    </footer>
+  </body>
+</html>

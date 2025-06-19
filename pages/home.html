@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Traverzy</title>
+  </head>
+  <body>
+    <nav class="side-nav">
+      <ul>
+        <li><a href="#hero" class="dot active" title="Hero"></a></li>
+        <li><a href="#themes" class="dot" title="Themes"></a></li>
+        <li><a href="#packages" class="dot" title="Packages"></a></li>
+        <li><a href="#contact" class="dot" title="Contact"></a></li>
+      </ul>
+    </nav>
+    <header>
+      <nav class="navbar">
+        <img src="/images/Logo.png" alt="Logo" class="logo" />
+        <ul class="menu">
+          <li class="item"><a href="/Pages/home.html">Home</a></li>
+          <li class="item"><a href="#Packages">Packages</a></li>
+          <li class="item"><a href="#Offers">Offers</a></li>
+          <li class="item"><a href="#contact">Contact</a></li>
+          <button class="btn login-btn">Login</button>
+        </ul>
+      </nav>
+    </header>
+    <header class="hero" id="hero">
+      <div class="slider">
+        <img src="/images/bg_image1.jpg" alt="Slide 1" />
+        <img src="/images/hero-place2.jpg" alt="Slide 2" />
+        <img src="/images/hero-place1.jpg" alt="Slide 3" />
+      </div>
+      <div class="overlay">
+        <h1>Explore Exotic Places</h1>
+        <p>Countless Memories!</p>
+        <div class="search-bar">
+          <input type="text" placeholder="Enter Your Dream Destination!" />
+          <button>Search</button>
+        </div>
+        <div class="theme-items">
+          <span onclick="showTheme('group')">Group Departure</span>
+          <span onclick="showTheme('honeymoon')">Honeymoon</span>
+          <span onclick="showTheme('pilgrimage')">Pilgrimage</span>
+          <span onclick="showTheme('ayurveda')">Ayurveda</span>
+          <span onclick="showTheme('luxury')">Luxury</span>
+          <span onclick="showTheme('adventure')">Adventure</span>
+        </div>
+        <div id="destination-suggestion">
+          <br /><a href="#"><p>Not Sure?</p></a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="theme-display">
+        <div id="group-content" style="display: none">
+          <h2>Group Departure</h2>
+          <div class="trending-cards-container" id="group-cards"></div>
+        </div>
+        <div id="honeymoon-content" style="display: none">
+          <h2>Group Departure</h2>
+          <div class="trending-cards-container" id="honeymoon-cards"></div>
+        </div>
+        <div id="pilgrimage-content" style="display: none">
+          <h2>Group Departure</h2>
+          <div class="trending-cards-container" id="pilgrimage-cards"></div>
+        </div>
+        <div id="ayurveda-content" style="display: none">
+          <h2>Group Departure</h2>
+          <div class="trending-cards-container" id="ayurveda-cards"></div>
+        </div>
+        <div id="luxury-content" style="display: none">
+          <h2>Group Departure</h2>
+          <div class="trending-cards-container" id="luxury-cards"></div>
+        </div>
+        <div id="adventure-content" style="display: none">
+          <h2>Group Departure</h2>
+          <div class="trending-cards-container" id="adventure-cards"></div>
+        </div>
+      </section>
+      <div id="theme-section"></div>
+      <section>
+        <div class="trending-section" id="themes">
+          <h2>Trending Tourist Packages</h2>
+          <div class="trending-cards-container" id="trending-cards"></div>
+        </div>
+      </section>
+      <section>
+        <h2 class="filter-title">
+          Search Holiday Packages by Duration, Season & Budget
+        </h2>
+        <div class="duration-slider">
+          <p style="text-align: center">
+            Best priced packages for your holiday <strong>DURATION</strong>
+          </p>
+          <div class="slider-bar">
+            <span class="step">1 to 3 Days</span>
+            <span class="step active">4 to 6 Days</span>
+            <span class="step">7 to 9 Days</span>
+            <span class="step">10 to 12 Days</span>
+            <span class="step">13 Days or More</span>
+          </div>
+        </div>
+        <div class="season-filter">
+          <p><strong>Expert picks for each SEASON</strong></p>
+          <label
+            ><input type="radio" name="season" checked /> Jan-Feb-Mar</label
+          >
+          <label><input type="radio" name="season" /> Apr-May-Jun</label>
+          <label><input type="radio" name="season" /> Jul-Aug-Sep</label>
+          <label><input type="radio" name="season" /> Oct-Nov-Dec</label>
+        </div>
+        <div class="budget-filter">
+          <label for="budget-select">Choose Budget:</label>
+          <select id="budget-select">
+            <option value="all">All</option>
+            <option value="below-10000">Below ₹10,000</option>
+            <option value="10000-25000">₹10,000–₹25,000</option>
+            <option value="25000-50000">₹25,000–₹50,000</option>
+            <option value="above-50000">Above ₹50,000</option>
+          </select>
+        </div>
+        <div class="package-carousel" style="padding-left: 5rem">
+          <div class="package-card">
+            <img src="/images/goa.jpg" alt="Maldives" />
+            <h4>Maldives (5D 4N)</h4>
+            <p>₹93,000/- per person</p>
+          </div>
+          <div class="package-card">
+            <img src="/images/goa.jpg" alt="Dubai" />
+            <h4>Dubai (6D 5N)</h4>
+            <p>₹46,990/- per person</p>
+          </div>
+          <div class="package-card">
+            <img src="/images/goa.jpg" alt="Goa" />
+            <h4>Goa (5D 4N)</h4>
+            <p>₹32,000/- per person</p>
+          </div>
+          <div class="package-card">
+            <img src="/images/goa.jpg" alt="Goa" />
+            <h4>Goa (5D 4N)</h4>
+            <p>₹32,000/- per person</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p>&copy; 2025 Traverzy. All Rights Reserved</p>
+      <p><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></p>
+    </footer>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
