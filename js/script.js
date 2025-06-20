@@ -1,3 +1,10 @@
+//navbar loading
+fetch("navbar.html")
+  .then((resobj) => resobj.text())
+  .then((data) => {
+    document.getElementById("nav-bar").innerHTML = data;
+  });
+//Theme-card-loading
 const themeData = {
   group: [
     { image: "/images/group1.jpg", title: "Group Trip to Bali" },
@@ -91,7 +98,7 @@ function showTheme(theme) {
     loadThemeCards(theme);
   }
 }
-
+//trending-card-loading
 document.addEventListener("DOMContentLoaded", () => {
   const trendingData = [
     {

@@ -1,0 +1,23 @@
+19/06/2025
+-callback()-calls a function inside a function
+
+  function greet(name,callback){
+   console.log("hi"+name);
+   callback();
+   }
+ 
+  function sayBye(){
+     console.log("bye");
+   }
+
+   greet("guna",sayBye);
+
+-setTimeout(function(){......},2000); //gets executed after 2 sec
+
+-sync vs async
+
+-error handling
+
+-hoisting... function can be declared anywhere
+
+-custom error "throw new error("");,try{}catch(error){}"

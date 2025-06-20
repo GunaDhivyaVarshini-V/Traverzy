@@ -9,23 +9,7 @@
   </head>
   <body>
     <!-- Navbar -->
-    <header>
-      <nav class="navbar">
-        <img src="/images/Logo.png" alt="Logo" class="logo" />
-        <ul class="menu">
-          <li class="item">
-            <a href="/Pages/agent-register.html" class="agent-link"
-              >Travel Agent?Join US</a
-            >
-          </li>
-          <li class="item"><a href="/Pages/home.html">Home</a></li>
-          <li class="item"><a href="#Packages">Packages</a></li>
-          <li class="item"><a href="#Offers">Offers</a></li>
-          <li class="item"><a href="#contact">Contact</a></li>
-          <button class="btn login-btn">Login</button>
-        </ul>
-      </nav>
-    </header>
+    <div id="nav-bar"></div>
     <!-- HeroSection -->
     <header class="hero">
       <div class="slider">
@@ -39,10 +23,6 @@
       </div>
     </header>
     <main>
-      <!-- <div class="package-image">
-        <img src="/images/hero-place2.jpg" alt="Goa Beach" />
-      </div> -->
-      <!-- Package-details -->
       <section class="package-details">
         <h2>Package Details</h2>
         <p><strong>Duration:</strong> 5 Days / 4 Nights</p>
@@ -105,16 +85,16 @@
       <section class="package-details">
         <h2>Book Your Package</h2>
         <form class="customization-form">
-          <label for="name">Full Name:</label>
+          <label for="name">Full Name:*</label>
           <input type="text" id="name" required />
 
           <label for="email">Email:</label>
           <input type="email" id="email" placeholder="xyz@gmail.com" required />
 
-          <label for="travel-date">Preferred Travel Date: (From)</label>
+          <label for="travel-date">Preferred Travel Date: (From)*</label>
           <input type="date" id="travel-date" required />
 
-          <label for="travel-date">Preferred Travel Date: (To)</label>
+          <label for="travel-date">Preferred Travel Date: (To)*</label>
           <input type="date" id="travel-date" required />
 
           <button type="submit">Book Now</button>
@@ -128,5 +108,6 @@
         <a href="#">Terms of Use</a>
       </p>
     </footer>
+    <script src="/js/script.js"></script>
   </body>
 </html>
