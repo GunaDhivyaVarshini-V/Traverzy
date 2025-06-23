@@ -52,7 +52,7 @@
           <span onclick="showTheme('adventure')">Adventure</span>
         </div>
         <div id="destination-suggestion">
-          <br /><a href="#"><p>Not Sure?</p></a>
+          <br /><a href="#filter-home"><p>Not Sure?</p></a>
         </div>
       </div>
     </header>
@@ -90,7 +90,7 @@
           <div class="trending-cards-container" id="trending-cards"></div>
         </div>
       </section>
-      <section>
+      <section id="filter-home">
         <h2 class="filter-title">
           Search Holiday Packages by Duration, Season & Budget
         </h2>
@@ -99,11 +99,11 @@
             Best priced packages for your holiday <strong>DURATION</strong>
           </p>
           <div class="slider-bar">
-            <span class="step">1 to 3 Days</span>
-            <span class="step active">4 to 6 Days</span>
-            <span class="step">7 to 9 Days</span>
-            <span class="step">10 to 12 Days</span>
-            <span class="step">13 Days or More</span>
+            <span class="step" data-duration="1-3">1 to 3 Days</span>
+            <span class="step active" data-duration="4-6">4 to 6 Days</span>
+            <span class="step" data-duration="7-9">7 to 9 Days</span>
+            <span class="step" data-duration="10-12">10 to 12 Days</span>
+            <span class="step" data-duration="13+">13 Days or More</span>
           </div>
         </div>
         <div class="season-filter">
@@ -125,28 +125,11 @@
             <option value="above-50000">Above ₹50,000</option>
           </select>
         </div>
-        <div class="package-carousel" style="padding-left: 5rem">
-          <div class="package-card">
-            <img src="/images/goa.jpg" alt="Maldives" />
-            <h4>Maldives (5D 4N)</h4>
-            <p>₹93,000/- per person</p>
-          </div>
-          <div class="package-card">
-            <img src="/images/goa.jpg" alt="Dubai" />
-            <h4>Dubai (6D 5N)</h4>
-            <p>₹46,990/- per person</p>
-          </div>
-          <div class="package-card">
-            <img src="/images/goa.jpg" alt="Goa" />
-            <h4>Goa (5D 4N)</h4>
-            <p>₹32,000/- per person</p>
-          </div>
-          <div class="package-card">
-            <img src="/images/goa.jpg" alt="Goa" />
-            <h4>Goa (5D 4N)</h4>
-            <p>₹32,000/- per person</p>
-          </div>
-        </div>
+        <div
+          class="package-carousel"
+          id="package-cards"
+          style="margin: 0px 5rem"
+        ></div>
       </section>
     </main>
     <footer class="site-footer">

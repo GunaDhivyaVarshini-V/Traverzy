@@ -152,23 +152,7 @@ button:hover {
   height: max-content;
 }
 
-/* agent in nav  */
-.agent-link {
-  color: #000;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  line-height: 1.5;
-  transition: color 0.3s ease;
-  display: inline-block;
-}
-
-.agent-link:hover {
-  color: #ff5e62; /* Coral red like TravelTriangle */
-  text-decoration: underline;
-}
-
-.side-nav {
+/* .side-nav {
   position: fixed;
   top: 50%;
   left: 20px;
@@ -195,7 +179,7 @@ button:hover {
 .side-nav .dot:hover,
 .side-nav .dot.active {
   background-color: #00bfa5; /* teal-like */
-  transform: scale(1.2);
+/* transform: scale(1.2);
 }
 
 .side-nav .dot::after {
@@ -218,7 +202,7 @@ button:hover {
 
 .side-nav .dot:hover::after {
   opacity: 1;
-}
+} */
 
 #destination-suggestion a {
   color: #fff;
@@ -237,7 +221,6 @@ button:hover {
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.9rem;
-  /* backdrop-filter: blur(3px); */
   cursor: pointer;
   transition: background 0.3s;
   color: #212020;
@@ -489,4 +472,10 @@ footer p a {
 .package-card p {
   color: green;
   font-weight: 600;
+}
+
+.package-card a,
+.trending-card a {
+  text-decoration: none;
+  color: inherit;
 }

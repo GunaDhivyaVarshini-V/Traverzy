@@ -10,9 +10,78 @@
   </head>
   <body>
     <div id="nav-bar"></div>
-    <div class="packages-header">Explore Our Travel Packages</div>
-    <div class="packages-container" id="packagesContainer">
-      <!-- Cards will be added here via JS -->
+    <!-- Filter bar -->
+    <div class="packages-wrapper">
+      <!-- Sidebar Filters -->
+      <aside class="filter-sidebar">
+        <h3>Filter by</h3>
+        <div class="filter-group">
+          <h4>Category</h4>
+          <label
+            ><input type="checkbox" class="filter-option" value="beach" />
+            Beach</label
+          ><br />
+          <label
+            ><input type="checkbox" class="filter-option" value="hill" /> Hill
+            Station</label
+          ><br />
+          <label
+            ><input type="checkbox" class="filter-option" value="cultural" />
+            Cultural</label
+          ><br />
+          <label
+            ><input type="checkbox" class="filter-option" value="adventure" />
+            Adventure</label
+          ><br />
+          <label
+            ><input type="checkbox" class="filter-option" value="pilgrimage" />
+            Pilgrimage</label
+          ><br />
+        </div>
+        <div class="filter-group">
+          <h4>Duration</h4>
+          <label
+            ><input type="radio" name="duration" value="1-3" /> 1–3 Days</label
+          ><br />
+          <label
+            ><input type="radio" name="duration" value="4-7" /> 4–7 Days</label
+          ><br />
+          <label
+            ><input type="radio" name="duration" value="8+" /> 8+ Days</label
+          >
+        </div>
+
+        <div class="filter-group">
+          <h4>Travel Type</h4>
+          <label><input type="checkbox" value="family" /> Family</label><br />
+          <label><input type="checkbox" value="solo" /> Solo</label><br />
+          <label><input type="checkbox" value="group" /> Group</label><br />
+        </div>
+
+        <div class="filter-group">
+          <h4>Price</h4>
+          <label
+            ><input type="radio" name="price" class="price" value="low" /> Under
+            ₹10,000</label
+          ><br />
+          <label
+            ><input type="radio" name="price" class="price" value="mid" />
+            ₹10,000 - ₹30,000</label
+          ><br />
+          <label
+            ><input type="radio" name="price" class="price" value="high" />
+            Above ₹30,000</label
+          ><br />
+        </div>
+      </aside>
+
+      <!-- Package Cards Section -->
+      <div class="packages-section">
+        <div class="packages-header">Explore Our Travel Packages</div>
+        <div class="packages-container" id="packagesContainer">
+          <!-- Cards will be added here via JS -->
+        </div>
+      </div>
     </div>
     <script src="/js/packages.js"></script>
   </body>

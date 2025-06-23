@@ -21,3 +21,6 @@
 -hoisting... function can be declared anywhere
 
 -custom error "throw new error("");,try{}catch(error){}"
+-setInterval()
+-clearInterval()
+-callstack
