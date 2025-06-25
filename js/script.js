@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-//HomePage Filter
+//Home Page filter
 document.addEventListener("DOMContentLoaded", () => {
   const PackageData = [
     {
@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link: "/Pages/destinations.html",
       days: 5,
       month: "JFM",
+      budget: 20000,
     },
     {
       image: "/images/group1.jpg",
@@ -174,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link: "/Pages/destinations.html",
       days: 6,
       month: "AMJ",
+      budget: 25000,
     },
     {
       image: "/images/group2.webp",
@@ -182,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link: "/Pages/destinations.html",
       days: 7,
       month: "JAS",
+      budget: 48000,
     },
     {
       image: "/images/group3.jpg",
@@ -190,6 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link: "/Pages/destinations.html",
       days: 4,
       month: "OND",
+      budget: 55000,
     },
     {
       image: "/images/hero-place2.jpg",
@@ -198,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link: "/Pages/destinations.html",
       days: 9,
       month: "JFM",
+      budget: 10000,
     },
     {
       image: "/images/hero-place1.jpg",
@@ -206,21 +211,34 @@ document.addEventListener("DOMContentLoaded", () => {
       link: "/Pages/destinations.html",
       days: 12,
       month: "JFM",
+      budget: 30000,
     },
     {
       image: "/images/hero-place1.jpg",
-      title: "Kerala Backwaters",
-      duration: "6 days 5 nights",
+      title: "Short Kerala Getaway",
+      duration: "3 days 2 nights",
       link: "/Pages/destinations.html",
       days: 3,
       month: "JFM",
+      budget: 9000,
     },
   ];
 
   const container = document.getElementById("package-cards");
 
+  // Default filters
+  let selectedDuration = "4-6";
+  let selectedSeason = "JFM";
+  let selectedBudget = "all";
+
+  //This gonna render the package cards
   function renderPackages(data) {
-    container.innerHTML = ""; // Clearing existing val
+    container.innerHTML = "";
+    if (data.length === 0) {
+      container.innerHTML =
+        "<p style='text-align:center;'>No packages match your filters.</p>";
+      return;
+    }
     data.forEach((pkg) => {
       const card = document.createElement("div");
       card.classList.add("package-card");
@@ -237,29 +255,66 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  renderPackages(PackageData); // Loading all initially
+  function applyFilters() {
+    let filtered = PackageData;
 
+    // Duration filter
+    if (selectedDuration === "13+") {
+      filtered = filtered.filter((pkg) => pkg.days >= 13);
+    } else {
+      const [min, max] = selectedDuration.split("-").map(Number);
+      filtered = filtered.filter((pkg) => pkg.days >= min && pkg.days <= max);
+    }
+
+    // Season filter
+    filtered = filtered.filter((pkg) => pkg.month === selectedSeason);
+
+    // Budget filter
+    filtered = filtered.filter((pkg) => {
+      const budget = pkg.budget;
+      switch (selectedBudget) {
+        case "below-10000":
+          return budget < 10000;
+        case "10000-25000":
+          return budget >= 10000 && budget <= 25000;
+        case "25000-50000":
+          return budget > 25000 && budget <= 50000;
+        case "above-50000":
+          return budget > 50000;
+        default:
+          return true;
+      }
+    });
+
+    renderPackages(filtered);
+  }
+
+  // Event Listener for days
   document.querySelectorAll(".slider-bar .step").forEach((step) => {
     step.addEventListener("click", () => {
-      // Setting span as active
       document
         .querySelectorAll(".slider-bar .step")
         .forEach((s) => s.classList.remove("active"));
       step.classList.add("active");
-
-      const range = step.getAttribute("data-duration");
-      let filtered = [];
-
-      if (range === "13+") {
-        filtered = PackageData.filter((pkg) => pkg.days >= 13);
-      } else {
-        const [min, max] = range.split("-").map(Number);
-        filtered = PackageData.filter(
-          (pkg) => pkg.days >= min && pkg.days <= max
-        );
-      }
-
-      renderPackages(filtered);
+      selectedDuration = step.getAttribute("data-duration");
+      applyFilters();
     });
   });
+
+  // Event Listener for season
+  document.querySelectorAll('input[name="season"]').forEach((radio, index) => {
+    radio.addEventListener("change", () => {
+      selectedSeason = radio.value;
+      applyFilters();
+    });
+  });
+
+  // Event Listener for budget
+  document.getElementById("budget-select").addEventListener("change", (e) => {
+    selectedBudget = e.target.value;
+    applyFilters();
+  });
+
+  // Initially loading all packages
+  renderPackages(PackageData);
 });

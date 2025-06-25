@@ -208,6 +208,23 @@ button:hover {
   color: #fff;
   font-weight: 500;
 }
+
+.dot {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 10px 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #717171;
+}
+
 /* Theme buttons below search bar in home page */
 .theme-items {
   display: flex;
@@ -302,6 +319,7 @@ button:hover {
 footer {
   background-color: #212020;
   width: 100%;
+  font-size: 14px;
 }
 footer p {
   justify-self: center;
@@ -478,4 +496,23 @@ footer p a {
 .trending-card a {
   text-decoration: none;
   color: inherit;
+}
+
+#clear-filters {
+  background-color: #f44336;
+  color: #ffffff;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 10rem;
+}
+
+#clear-filters:hover {
+  background-color: #d32f2f;
+}
+.clear-button {
+  text-align: center;
 }

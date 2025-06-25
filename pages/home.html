@@ -54,6 +54,11 @@
         <div id="destination-suggestion">
           <br /><a href="#filter-home"><p>Not Sure?</p></a>
         </div>
+        <div style="text-align: center" class="hero-slide-controls">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
       </div>
     </header>
     <main>
@@ -109,11 +114,18 @@
         <div class="season-filter">
           <p><strong>Expert picks for each SEASON</strong></p>
           <label
-            ><input type="radio" name="season" checked /> Jan-Feb-Mar</label
+            ><input type="radio" name="season" value="JFM" checked />
+            Jan-Feb-Mar</label
           >
-          <label><input type="radio" name="season" /> Apr-May-Jun</label>
-          <label><input type="radio" name="season" /> Jul-Aug-Sep</label>
-          <label><input type="radio" name="season" /> Oct-Nov-Dec</label>
+          <label
+            ><input type="radio" name="season" value="APM" /> Apr-May-Jun</label
+          >
+          <label
+            ><input type="radio" name="season" value="JAS" /> Jul-Aug-Sep</label
+          >
+          <label
+            ><input type="radio" name="season" value="OND" /> Oct-Nov-Dec</label
+          >
         </div>
         <div class="budget-filter">
           <label for="budget-select">Choose Budget:</label>
@@ -124,7 +136,11 @@
             <option value="25000-50000">₹25,000–₹50,000</option>
             <option value="above-50000">Above ₹50,000</option>
           </select>
+          <span class="clear-button"
+            ><button id="clear-filters">Clear All Filters</button></span
+          >
         </div>
+
         <div
           class="package-carousel"
           id="package-cards"
@@ -134,7 +150,9 @@
     </main>
     <footer class="site-footer">
       <p>&copy; 2025 Traverzy. All Rights Reserved</p>
-      <p><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></p>
+      <p>
+        <a href="#">Privacy Policy</a>&nbsp;&nbsp;<a href="#">Terms of Use</a>
+      </p>
     </footer>
     <script src="/js/script.js"></script>
   </body>

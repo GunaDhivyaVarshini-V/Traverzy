@@ -24,3 +24,16 @@
 -setInterval()
 -clearInterval()
 -callstack
+
+24/06/2025
+
+-.then() //promises
+-.catch() //catches error
+
+-chaining multiple functions by order of dependency
+-promise.all([p1,p2,p3]) \\for multiple function check at once
+ .then()
+ .catch()
+-promise.race() //returns first resolved/rejected promise
+-promise.allSettled() //returns the results of all promises
+-promise.
