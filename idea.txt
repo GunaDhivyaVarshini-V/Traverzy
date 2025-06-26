@@ -11,6 +11,21 @@
    }
 
    greet("guna",sayBye);
+//diamond
+let n= parseInt(prompt("Enter the value of n:"));
+
+for (let i = -n; i <= n; i++) {
+  let line = "";
+  for (let j = -n; j <= n; j++) {
+    if (Math.abs(i) + Math.abs(j) <= n) {
+      line += "* ";
+    } else {
+      line += "  ";
+    }
+  }
+  console.log(line);
+}
+
 
 -setTimeout(function(){......},2000); //gets executed after 2 sec
 
@@ -36,4 +51,8 @@
  .catch()
 -promise.race() //returns first resolved/rejected promise
 -promise.allSettled() //returns the results of all promises
--promise.
+
+//jquery
+xhr=new XMLHttpRequest();
+xhr.open('GET','URL',true/false"based on whether other operations should wait or not")
+xhr.readyState()

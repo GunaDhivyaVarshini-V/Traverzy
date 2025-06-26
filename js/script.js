@@ -1,79 +1,64 @@
-//navbar loading
+//  Load Navbar
 fetch("navbar.html")
-  .then((resobj) => resobj.text())
+  .then((res) => res.text())
   .then((data) => {
     document.getElementById("nav-bar").innerHTML = data;
   });
 
-//Theme-card-loading
+const script = document.createElement("script");
+script.src =
+  "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
+document.body.appendChild(script);
+
+//  Theme Cards Data
 const themeData = {
   group: [
     { image: "/images/group1.jpg", title: "Group Trip to Bali" },
     { image: "/images/group2.webp", title: "Group Trip to Manali" },
     { image: "/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
-    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/images/group2.webp", title: "Manali Trip" },
-    { image: "/images/group3.jpg", title: "Leh-Ladakh" },
   ],
   honeymoon: [
     { image: "/images/hero-place1.jpg", title: "Romantic Paris" },
     { image: "/images/hero-place2.jpg", title: "Maldives Escape" },
     { image: "/images/group2.webp", title: "Swiss Honeymoon" },
-    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/images/group2.webp", title: "Manali Trip" },
-    { image: "/images/group3.jpg", title: "Leh-Ladakh" },
   ],
   pilgrimage: [
     { image: "/images/group1.jpg", title: "Spiritual Varanasi" },
     { image: "/images/group2.webp", title: "Rameswaram Temple Tour" },
-    { image: "/images/group2.webp", title: "Group Trip to Manali" },
-    { image: "/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
-    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/images/group2.webp", title: "Manali Trip" },
-    { image: "/images/group3.jpg", title: "Leh-Ladakh" },
   ],
   ayurveda: [
     { image: "/images/hero-place2.jpg", title: "Kerala Healing Retreat" },
-    { image: "/images/group2.webp", title: "Group Trip to Manali" },
-    { image: "/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
-    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/images/group2.webp", title: "Manali Trip" },
-    { image: "/images/group3.jpg", title: "Leh-Ladakh" },
   ],
   luxury: [
     { image: "/images/group3.jpg", title: "Luxury Dubai" },
     { image: "/images/group1.jpg", title: "Swiss Luxury Resorts" },
-    { image: "/images/group2.webp", title: "Group Trip to Manali" },
-    { image: "/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
-    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/images/group2.webp", title: "Manali Trip" },
   ],
   adventure: [
     { image: "/images/group2.webp", title: "Skydiving Dubai" },
     { image: "/images/group3.jpg", title: "Trekking Himalayas" },
-    { image: "/images/group2.webp", title: "Group Trip to Manali" },
-    { image: "/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
-    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/images/group2.webp", title: "Manali Trip" },
   ],
 };
 
+// Load Theme Cards
 function loadThemeCards(theme) {
   const container = document.getElementById(`${theme}-cards`);
+  if (!container) return;
+
   container.innerHTML = "";
   themeData[theme].forEach((card) => {
-    const element = document.createElement("div");
-    element.className = "trending-card";
-    element.innerHTML = `
-        <img src="${card.image}" alt="${card.title}" />
-        <div class="trending-card-content">
-          <p>${card.title}</p>
-        </div>
-      `;
-    container.appendChild(element);
+    const div = document.createElement("div");
+    div.className = "trending-card";
+    div.innerHTML = `
+      <img src="${card.image}" alt="${card.title}" loading="lazy"/>
+      <div class="trending-card-content">
+        <p>${card.title}</p>
+      </div>
+    `;
+    container.appendChild(div);
   });
 }
 
+//  Show Selected Theme
 function showTheme(theme) {
   document
     .querySelectorAll(".theme-items span")
@@ -86,78 +71,71 @@ function showTheme(theme) {
   section.innerHTML = "";
 
   const target = document.getElementById(`${theme}-content`);
-  if (!target) {
-    console.warn("No content found for:", theme);
-    return;
-  }
+  if (!target) return;
+
   target.style.display = "block";
   section.appendChild(target);
-
-  if (themeData[theme]) {
-    loadThemeCards(theme);
-  }
+  loadThemeCards(theme);
 }
 
-//trending-card-loading
+// DOM Content Loaded
 document.addEventListener("DOMContentLoaded", () => {
+  //  Trending Cards
   const trendingData = [
     {
       image: "/images/cardimage.jpg",
       title: "Lake Como, Italy",
       duration: "5 days 4 nights",
-      link: "/Pages/destinations.html",
+      link: "/Pages/bookingPage.html",
     },
     {
       image: "/images/group1.jpg",
       title: "Bali Group Tour",
       duration: "6 days 5 nights",
-      link: "/Pages/destinations.html",
+      link: "/Pages/bookingPage.html",
     },
     {
       image: "/images/group2.webp",
       title: "Swiss Alps Adventure",
       duration: "7 days 6 nights",
-      link: "/Pages/destinations.html",
+      link: "/Pages/bookingPage.html",
     },
     {
       image: "/images/group3.jpg",
       title: "Maldives Honeymoon",
       duration: "4 days 3 nights",
-      link: "/Pages/destinations.html",
+      link: "/Pages/bookingPage.html",
     },
     {
       image: "/images/hero-place2.jpg",
       title: "Goa Beach Fun",
       duration: "5 days 4 nights",
-      link: "/Pages/destinations.html",
+      link: "/Pages/BookingPage.html",
     },
     {
       image: "/images/hero-place1.jpg",
       title: "Kerala Backwaters",
       duration: "6 days 5 nights",
-      link: "/Pages/destinations.html",
+      link: "/Pages/bookingPage.html",
     },
   ];
-
-  const container = document.getElementById("trending-cards");
+  const trendingContainer = document.getElementById("trending-cards");
   trendingData.forEach((pkg) => {
     const card = document.createElement("div");
-    card.classList.add("trending-card");
+    card.className = "trending-card";
     card.innerHTML = `
       <a href="${pkg.link}">
-        <img src="${pkg.image}" alt="${pkg.title}" />
+        <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
         <div class="trending-card-content">
           <h4><b>${pkg.title}</b></h4>
           <p>${pkg.duration}</p>
         </div>
       </a>
     `;
-    container.appendChild(card);
+    trendingContainer.appendChild(card);
   });
-});
 
-//Home Page filter
-document.addEventListener("DOMContentLoaded", () => {
+  //  Packages Filter
   const PackageData = [
     {
       image: "/images/goa.jpg",
@@ -223,15 +201,11 @@ document.addEventListener("DOMContentLoaded", () => {
       budget: 9000,
     },
   ];
-
   const container = document.getElementById("package-cards");
-
-  // Default filters
   let selectedDuration = "4-6";
   let selectedSeason = "JFM";
   let selectedBudget = "all";
 
-  //This gonna render the package cards
   function renderPackages(data) {
     container.innerHTML = "";
     if (data.length === 0) {
@@ -241,10 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     data.forEach((pkg) => {
       const card = document.createElement("div");
-      card.classList.add("package-card");
+      card.className = "package-card";
       card.innerHTML = `
         <a href="${pkg.link}">
-          <img src="${pkg.image}" alt="${pkg.title}" />
+          <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
           <div class="trending-card-content">
             <h4><b>${pkg.title}</b></h4>
             <p>${pkg.duration}</p>
@@ -258,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function applyFilters() {
     let filtered = PackageData;
 
-    // Duration filter
+    // Duration Filter
     if (selectedDuration === "13+") {
       filtered = filtered.filter((pkg) => pkg.days >= 13);
     } else {
@@ -266,21 +240,21 @@ document.addEventListener("DOMContentLoaded", () => {
       filtered = filtered.filter((pkg) => pkg.days >= min && pkg.days <= max);
     }
 
-    // Season filter
+    // Season Filter
     filtered = filtered.filter((pkg) => pkg.month === selectedSeason);
 
-    // Budget filter
+    // Budget Filter
     filtered = filtered.filter((pkg) => {
-      const budget = pkg.budget;
+      const b = pkg.budget;
       switch (selectedBudget) {
         case "below-10000":
-          return budget < 10000;
+          return b < 10000;
         case "10000-25000":
-          return budget >= 10000 && budget <= 25000;
+          return b >= 10000 && b <= 25000;
         case "25000-50000":
-          return budget > 25000 && budget <= 50000;
+          return b > 25000 && b <= 50000;
         case "above-50000":
-          return budget > 50000;
+          return b > 50000;
         default:
           return true;
       }
@@ -289,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPackages(filtered);
   }
 
-  // Event Listener for days
+  // Days Event listener
   document.querySelectorAll(".slider-bar .step").forEach((step) => {
     step.addEventListener("click", () => {
       document
@@ -300,21 +274,33 @@ document.addEventListener("DOMContentLoaded", () => {
       applyFilters();
     });
   });
-
-  // Event Listener for season
-  document.querySelectorAll('input[name="season"]').forEach((radio, index) => {
+  //Season Event listener
+  document.querySelectorAll('input[name="season"]').forEach((radio) => {
     radio.addEventListener("change", () => {
       selectedSeason = radio.value;
       applyFilters();
     });
   });
-
-  // Event Listener for budget
+  //Budget Event listener
   document.getElementById("budget-select").addEventListener("change", (e) => {
     selectedBudget = e.target.value;
     applyFilters();
   });
+  // Reset Filter
+  document.getElementById("clear-filters").addEventListener("click", () => {
+    selectedDuration = "4-6";
+    selectedSeason = "JFM";
+    selectedBudget = "all";
 
-  // Initially loading all packages
+    document.querySelectorAll(".slider-bar .step").forEach((s, i) => {
+      s.classList.toggle("active", s.getAttribute("data-duration") === "4-6");
+    });
+    document.querySelector('input[value="JFM"]').checked = true;
+    document.getElementById("budget-select").value = "all";
+
+    renderPackages(PackageData);
+  });
+
+  // Initial Render
   renderPackages(PackageData);
 });
