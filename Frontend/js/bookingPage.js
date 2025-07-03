@@ -2,8 +2,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const bookingForm = document.querySelector("#package-form form");
 
-  const name = document.getElementById("name");
-  const email = document.getElementById("email");
+  const name = document.getElementsByName("name");
+  const email = document.getElementById("bookingEmail");
   const emailError = document.getElementById("emailError");
   const nameError = document.getElementById("nameError");
 

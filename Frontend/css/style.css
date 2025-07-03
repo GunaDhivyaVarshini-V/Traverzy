@@ -498,19 +498,19 @@ footer p a {
 }
 
 #clear-filters {
-  background-color: #f44336;
+  background-color: white;
   color: #ffffff;
-  padding: 10px 20px;
+  padding: 9px 20px;
   font-weight: bold;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 10rem;
+  width: 4rem;
 }
 
 #clear-filters:hover {
-  background-color: #d32f2f;
+  background-color: #c4b7b7;
 }
 .clear-button {
   text-align: center;

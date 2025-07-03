@@ -1,7 +1,7 @@
 const packages = [
   {
     name: "Paris",
-    image: "/images/group1.jpg",
+    image: "/Frontend/images/group1.jpg",
     description:
       "Experience the romance, culture, and cuisine of the City of Lights.",
     category: "cultural",
@@ -11,7 +11,7 @@ const packages = [
   },
   {
     name: "Maldives",
-    image: "/images/group1.jpg",
+    image: "/Frontend/images/group1.jpg",
     description: "Crystal-clear waters, white sands, and luxury at its finest.",
     category: "beach",
     duration: "4-7",
@@ -20,7 +20,7 @@ const packages = [
   },
   {
     name: "Bali",
-    image: "/images/group1.jpg",
+    image: "/Frontend/images/group1.jpg",
     description: "A tropical paradise of beaches, temples, and lush greenery.",
     category: "hill",
     duration: "8+",
@@ -29,7 +29,7 @@ const packages = [
   },
   {
     name: "Switzerland",
-    image: "/images/group1.jpg",
+    image: "/Frontend/images/group1.jpg",
     description:
       "Snow-capped mountains, scenic train rides, and chocolate heaven.",
     category: "beach",
@@ -39,7 +39,7 @@ const packages = [
   },
   {
     name: "Dubai",
-    image: "/images/group1.jpg",
+    image: "/Frontend/images/group1.jpg",
     description: "Experience luxury, deserts, and the futuristic skyline.",
     category: "beach",
     duration: "4-7",
@@ -51,16 +51,17 @@ const packages = [
 const container = document.getElementById("packagesContainer");
 //Package Rendering
 function renderPackages(filterPackages) {
-  container.innerHTML = "";
+  try {
+    container.innerHTML = "";
 
-  filterPackages.forEach((pkg) => {
-    const card = document.createElement("div");
-    card.className = "package-card";
-    card.setAttribute("data-category", pkg.category);
-    card.setAttribute("data-duration", pkg.duration);
-    card.setAttribute("data-type", pkg.type);
-    card.setAttribute("data-price", pkg.price);
-    card.innerHTML = `
+    filterPackages.forEach((pkg) => {
+      const card = document.createElement("div");
+      card.className = "package-card";
+      card.setAttribute("data-category", pkg.category);
+      card.setAttribute("data-duration", pkg.duration);
+      card.setAttribute("data-type", pkg.type);
+      card.setAttribute("data-price", pkg.price);
+      card.innerHTML = `
     <img src="${pkg.image}" alt="${pkg.name}">
     <div class="card-content">
       <div class="card-title">${pkg.name}</div>
@@ -68,8 +69,11 @@ function renderPackages(filterPackages) {
     </div>
   `;
 
-    container.appendChild(card);
-  });
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error Rendering Packages in PAckages page", error);
+  }
 }
 renderPackages(packages);
 const filterInputs = document.querySelectorAll(
@@ -110,24 +114,28 @@ function getSelectedFilters() {
 }
 
 function filterPackages() {
-  const filters = getSelectedFilters();
+  try {
+    const filters = getSelectedFilters();
 
-  const filtered = packages.filter((pkg) => {
-    const categoryMatch = filters.category.length
-      ? filters.category.includes(pkg.category)
-      : true;
-    const durationMatch = filters.duration
-      ? pkg.duration === filters.duration
-      : true;
-    const typeMatch = filters.type.length
-      ? filters.type.includes(pkg.type)
-      : true;
-    const priceMatch = filters.price ? pkg.price === filters.price : true;
+    const filtered = packages.filter((pkg) => {
+      const categoryMatch = filters.category.length
+        ? filters.category.includes(pkg.category)
+        : true;
+      const durationMatch = filters.duration
+        ? pkg.duration === filters.duration
+        : true;
+      const typeMatch = filters.type.length
+        ? filters.type.includes(pkg.type)
+        : true;
+      const priceMatch = filters.price ? pkg.price === filters.price : true;
 
-    return categoryMatch && durationMatch && typeMatch && priceMatch;
-  });
+      return categoryMatch && durationMatch && typeMatch && priceMatch;
+    });
 
-  renderPackages(filtered);
+    renderPackages(filtered);
+  } catch (error) {
+    console.error("Error Filtering Packages in Packages Page", error);
+  }
 }
 
 filterInputs.forEach((input) => {

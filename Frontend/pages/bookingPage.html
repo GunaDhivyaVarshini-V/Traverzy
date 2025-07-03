@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/bookingPage.css" />
+    <link rel="stylesheet" href="/Frontend/css/style.css" />
+    <link rel="stylesheet" href="/Frontend/css/bookingPage.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -24,9 +24,9 @@
     <!-- HeroSection -->
     <header class="hero">
       <div class="slider">
-        <img src="/images/italy.jpg" alt="Slide 1" />
-        <img src="/images/italy2.jpg" alt="Slide 2" />
-        <img src="/images/italy3.jpg" alt="Slide 3" />
+        <img src="/Frontend/images/italy.jpg" alt="Slide 1" />
+        <img src="/Frontend/images/italy2.jpg" alt="Slide 2" />
+        <img src="/Frontend/images/italy3.jpg" alt="Slide 3" />
       </div>
       <div class="overlay" id="destination-herotext">
         <h1>Lake como, Italy</h1>
@@ -59,16 +59,15 @@
         </ul>
         <br />
         <!-- Button trigger modal -->
-        <!-- <button
+        <button
           type="button"
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
         >
-          Launch static backdrop modal
+          Book now
         </button>
 
-        
         <div
           class="modal fade"
           id="staticBackdrop"
@@ -78,11 +77,11 @@
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog">
+          <div class="modal-dialog" id="package-form">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">
-                  Modal title
+                  Enter the Details
                 </h5>
                 <button
                   type="button"
@@ -91,22 +90,37 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">...</div>
+              <div class="modal-body">
+                <form action="#">
+                  <div class="mb-3">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" name="name" id="firstName" /><br />
+                    <small id="nameError"></small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" name="name" id="lastName" />
+                  </div>
+                  <div class="mb-3">
+                    <label for="bookingEmail">Email:</label>
+                    <input type="email" id="bookingEmail" />
+                  </div>
+                  <div class="mb-3"></div>
+                </form>
+              </div>
               <div class="modal-footer">
                 <button
                   type="button"
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Close
+                  Cancel
                 </button>
-                <button type="button" class="btn btn-primary">
-                  Understood
-                </button>
+                <button type="button" class="btn btn-primary">Next</button>
               </div>
             </div>
           </div>
-        </div>-->
+        </div>
       </section>
 
       <!-- Customization Options -->
@@ -173,12 +187,12 @@
       <section class="gallery">
         <h2>Image Gallery</h2>
         <div class="gallery-grid">
-          <img src="/images/italy.jpg" alt="Italy View 1" />
-          <img src="/images/italy2.jpg" alt="Italy View 1" />
-          <img src="/images/italy3.jpg" alt="Italy View 1" />
-          <img src="/images/group1.jpg" alt="Italy View 1" />
-          <img src="/images/group2.webp" alt="Italy View 1" />
-          <img src="/images/group3.jpg" alt="Italy View 1" />
+          <img src="/Frontend/images/italy.jpg" alt="Italy View 1" />
+          <img src="/Frontend/images/italy2.jpg" alt="Italy View 1" />
+          <img src="/Frontend/images/italy3.jpg" alt="Italy View 1" />
+          <img src="/Frontend/images/group1.jpg" alt="Italy View 1" />
+          <img src="/Frontend/images/group2.webp" alt="Italy View 1" />
+          <img src="/Frontend/images/group3.jpg" alt="Italy View 1" />
         </div>
       </section>
     </main>
@@ -189,7 +203,7 @@
         <a href="#">Terms of Use</a>
       </p>
     </footer>
-    <script src="/js/script.js"></script>
-    <script src="/js/bookingPage.js"></script>
+    <script src="/Frontend/js/script.js"></script>
+    <script src="/Frontend/js/bookingPage.js"></script>
   </body>
 </html>
