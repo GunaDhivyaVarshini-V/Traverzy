@@ -11,7 +11,6 @@ function authenticate() {
           </svg>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Dashboard</a></li>
             <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
           </ul>
         </div>

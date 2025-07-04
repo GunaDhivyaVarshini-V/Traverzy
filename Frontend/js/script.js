@@ -1,33 +1,33 @@
 const script = document.createElement("script");
-script.src =
-  "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
+script.src ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
 document.body.appendChild(script);
+
 //  Theme Cards Data
 const themeData = {
   group: [
-    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/images/group2.webp", title: "Group Trip to Manali" },
-    { image: "/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
+    { image: "/Frontend/images/group1.jpg", title: "Group Trip to Bali" },
+    { image: "/Frontend/images/group2.webp", title: "Group Trip to Manali" },
+    { image: "/Frontend/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
   ],
   honeymoon: [
-    { image: "/images/hero-place1.jpg", title: "Romantic Paris" },
-    { image: "/images/hero-place2.jpg", title: "Maldives Escape" },
-    { image: "/images/group2.webp", title: "Swiss Honeymoon" },
+    { image: "/Frontend/images/hero-place1.jpg", title: "Romantic Paris" },
+    { image: "/Frontend/images/hero-place2.jpg", title: "Maldives Escape" },
+    { image: "/Frontend/images/group2.webp", title: "Swiss Honeymoon" },
   ],
   pilgrimage: [
-    { image: "/images/group1.jpg", title: "Spiritual Varanasi" },
-    { image: "/images/group2.webp", title: "Rameswaram Temple Tour" },
+    { image: "/Frontend/images/group1.jpg", title: "Spiritual Varanasi" },
+    { image: "/Frontend/images/group2.webp", title: "Rameswaram Temple Tour" },
   ],
   ayurveda: [
-    { image: "/images/hero-place2.jpg", title: "Kerala Healing Retreat" },
+    { image: "/Frontend/images/hero-place2.jpg", title: "Kerala Healing Retreat" },
   ],
   luxury: [
-    { image: "/images/group3.jpg", title: "Luxury Dubai" },
-    { image: "/images/group1.jpg", title: "Swiss Luxury Resorts" },
+    { image: "/Frontend/images/group3.jpg", title: "Luxury Dubai" },
+    { image: "/Frontend/images/group1.jpg", title: "Swiss Luxury Resorts" },
   ],
   adventure: [
-    { image: "/images/group2.webp", title: "Skydiving Dubai" },
-    { image: "/images/group3.jpg", title: "Trekking Himalayas" },
+    { image: "/Frontend/images/group2.webp", title: "Skydiving Dubai" },
+    { image: "/Frontend/images/group3.jpg", title: "Trekking Himalayas" },
   ],
 };
 
@@ -42,11 +42,11 @@ function loadThemeCards(theme) {
       const div = document.createElement("div");
       div.className = "trending-card";
       div.innerHTML = `
-      <img src="${card.image}" alt="${card.title}" loading="lazy"/>
-      <div class="trending-card-content">
-        <p>${card.title}</p>
-      </div>
-    `;
+        <img src="${card.image}" alt="${card.title}" loading="lazy"/>
+        <div class="trending-card-content">
+          <p>${card.title}</p>
+        </div>
+      `;
       container.appendChild(div);
     });
   } catch (error) {
@@ -54,7 +54,7 @@ function loadThemeCards(theme) {
   }
 }
 
-//  Show Selected Theme
+// Show Selected Theme
 function showTheme(theme) {
   try {
     document
@@ -80,148 +80,69 @@ function showTheme(theme) {
 
 // DOM Content Loaded
 document.addEventListener("DOMContentLoaded", () => {
-  //  Trending Cards
-  const trendingData = [
-    {
-      image: "/images/cardimage.jpg",
-      title: "Lake Como, Italy",
-      duration: "5 days 4 nights",
-      link: "/Pages/bookingPage.html",
-    },
-    {
-      image: "/images/group1.jpg",
-      title: "Bali Group Tour",
-      duration: "6 days 5 nights",
-      link: "/Pages/bookingPage.html",
-    },
-    {
-      image: "/images/group2.webp",
-      title: "Swiss Alps Adventure",
-      duration: "7 days 6 nights",
-      link: "/Pages/bookingPage.html",
-    },
-    {
-      image: "/images/group3.jpg",
-      title: "Maldives Honeymoon",
-      duration: "4 days 3 nights",
-      link: "/Pages/bookingPage.html",
-    },
-    {
-      image: "/images/hero-place2.jpg",
-      title: "Goa Beach Fun",
-      duration: "5 days 4 nights",
-      link: "/Pages/BookingPage.html",
-    },
-    {
-      image: "/images/hero-place1.jpg",
-      title: "Kerala Backwaters",
-      duration: "6 days 5 nights",
-      link: "/Pages/bookingPage.html",
-    },
-  ];
-  try {
-    const trendingContainer = document.getElementById("trending-cards");
-    trendingData.forEach((pkg) => {
-      const card = document.createElement("div");
-      card.className = "trending-card";
-      card.innerHTML = `
-      <a href="${pkg.link}">
-        <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
-        <div class="trending-card-content">
-          <h4><b>${pkg.title}</b></h4>
-          <p>${pkg.duration}</p>
-        </div>
-      </a>
-    `;
-      trendingContainer.appendChild(card);
+//Navbar Loading
+ fetch("http://localhost:3000/api/nav")
+  .then((response) => response.json())
+  .then((data) => {
+    const menu = document.getElementById("menu");
+    data.forEach((item) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.textContent = item.name;
+      a.href = item.href;
+      a.className = "item";
+      a.id = item.id;
+      li.appendChild(a);
+      menu.appendChild(li);
     });
-  } catch (error) {
-    console.error("Error Showing Trending Cards");
-  }
+  })
+  .catch((err) => {
+    console.error("Can't receive nav data:", err);
+  });
 
-  //  Packages Filter
-  const PackageData = [
-    {
-      image: "/images/goa.jpg",
-      title: "Lake Como, Italy",
-      duration: "5 days 4 nights",
-      link: "/Pages/destinations.html",
-      days: 5,
-      month: "JFM",
-      budget: 20000,
-    },
-    {
-      image: "/images/group1.jpg",
-      title: "Bali Group Tour",
-      duration: "6 days 5 nights",
-      link: "/Pages/destinations.html",
-      days: 6,
-      month: "AMJ",
-      budget: 25000,
-    },
-    {
-      image: "/images/group2.webp",
-      title: "Swiss Alps Adventure",
-      duration: "7 days 6 nights",
-      link: "/Pages/destinations.html",
-      days: 7,
-      month: "JAS",
-      budget: 48000,
-    },
-    {
-      image: "/images/group3.jpg",
-      title: "Maldives Honeymoon",
-      duration: "4 days 3 nights",
-      link: "/Pages/destinations.html",
-      days: 4,
-      month: "OND",
-      budget: 55000,
-    },
-    {
-      image: "/images/hero-place2.jpg",
-      title: "Goa Beach Fun",
-      duration: "5 days 4 nights",
-      link: "/Pages/destinations.html",
-      days: 9,
-      month: "JFM",
-      budget: 10000,
-    },
-    {
-      image: "/images/hero-place1.jpg",
-      title: "Kerala Backwaters",
-      duration: "6 days 5 nights",
-      link: "/Pages/destinations.html",
-      days: 12,
-      month: "JFM",
-      budget: 30000,
-    },
-    {
-      image: "/images/hero-place1.jpg",
-      title: "Short Kerala Getaway",
-      duration: "3 days 2 nights",
-      link: "/Pages/destinations.html",
-      days: 3,
-      month: "JFM",
-      budget: 9000,
-    },
-  ];
-  const container = document.getElementById("package-cards");
+
+  // Trending Cards
+  fetch("http://localhost:3000/api/trendingImages")
+    .then((res) => res.json())
+    .then((trendingData) => {
+      const trendingContainer = document.getElementById("trending-cards");
+      trendingContainer.innerHTML = "";
+      trendingData.forEach((pkg) => {
+        const card = document.createElement("div");
+        card.className = "trending-card";
+        card.innerHTML = `
+          <a href="${pkg.link}">
+            <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
+            <div class="trending-card-content">
+              <h4><b>${pkg.title}</b></h4>
+              <p>${pkg.duration}</p>
+            </div>
+          </a>
+        `;
+        trendingContainer.appendChild(card);
+      });
+    })
+    .catch((error) => {
+      console.error("Error Showing Trending Cards", error);
+    });
+
+  // Package Filters
   let selectedDuration = "0";
   let selectedSeason = "JFM";
   let selectedBudget = "all";
+  let packageData = [];
 
   function renderPackages(data) {
-    try {
-      container.innerHTML = "";
-      if (data.length === 0) {
-        container.innerHTML =
-          "<p style='text-align:center;'>No packages match your filters.</p>";
-        return;
-      }
-      data.forEach((pkg) => {
-        const card = document.createElement("div");
-        card.className = "package-card";
-        card.innerHTML = `
+    const container = document.getElementById("package-cards");
+    container.innerHTML = "";
+    if (data.length === 0) {
+      container.innerHTML = "<p style='text-align:center;'>No packages match your filters.</p>";
+      return;
+    }
+    data.forEach((pkg) => {
+      const card = document.createElement("div");
+      card.className = "package-card";
+      card.innerHTML = `
         <a href="${pkg.link}">
           <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
           <div class="trending-card-content">
@@ -230,23 +151,18 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </a>
       `;
-        container.appendChild(card);
-      });
-    } catch (error) {
-      console.error("Error Rendering Packages in homePage", error);
-    }
+      container.appendChild(card);
+    });
   }
 
   function applyFilters() {
     try {
-      let filtered = PackageData;
+      let filtered = packageData;
 
       // Duration Filter
       if (selectedDuration === "13+") {
         filtered = filtered.filter((pkg) => pkg.days >= 13);
-      } else if (selectedDuration === "0") {
-        renderPackages(PackageData);
-      } else {
+      } else if (selectedDuration !== "0") {
         const [min, max] = selectedDuration.split("-").map(Number);
         filtered = filtered.filter((pkg) => pkg.days >= min && pkg.days <= max);
       }
@@ -273,48 +189,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
       renderPackages(filtered);
     } catch (error) {
-      console.error("Error Filtering PAckages in HomePage", error);
+      console.error("Error Filtering Packages in HomePage", error);
     }
   }
 
-  // Days Event listener
+  // Fetch package data and render
+  fetch("http://localhost:3000/api/packageImages")
+    .then((res) => res.json())
+    .then((data) => {
+      packageData = data;
+      renderPackages(packageData);
+    })
+    .catch((error) => {
+      console.error("Error Showing Package Cards", error);
+    });
+
+  // Event Listeners
   document.querySelectorAll(".slider-bar .step").forEach((step) => {
     step.addEventListener("click", () => {
-      document
-        .querySelectorAll(".slider-bar .step")
-        .forEach((s) => s.classList.remove("active"));
+      document.querySelectorAll(".slider-bar .step").forEach((s) => s.classList.remove("active"));
       step.classList.add("active");
       selectedDuration = step.getAttribute("data-duration");
       applyFilters();
     });
   });
-  //Season Event listener
+
   document.querySelectorAll('input[name="season"]').forEach((radio) => {
     radio.addEventListener("change", () => {
       selectedSeason = radio.value;
       applyFilters();
     });
   });
-  //Budget Event listener
+
   document.getElementById("budget-select").addEventListener("change", (e) => {
     selectedBudget = e.target.value;
     applyFilters();
   });
-  // Reset Filter
+
   document.getElementById("clear-filters").addEventListener("click", () => {
     selectedDuration = "0";
-    selectedSeason = "";
+    selectedSeason = "JFM";
     selectedBudget = "all";
 
-    document.querySelectorAll(".slider-bar .step").forEach((s, i) => {
+    document.querySelectorAll(".slider-bar .step").forEach((s) => {
       s.classList.toggle("active", s.getAttribute("data-duration") === "0");
     });
-    // document.querySelector('input[value="JFM"]').checked = true;
+
+    document.querySelector('input[name="season"][value="JFM"]').checked = true;
     document.getElementById("budget-select").value = "all";
 
-    renderPackages(PackageData);
+    renderPackages(packageData);
   });
-
-  // Initial Render
-  renderPackages(PackageData);
 });
