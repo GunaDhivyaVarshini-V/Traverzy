@@ -5,29 +5,29 @@ document.body.appendChild(script);
 //  Theme Cards Data
 const themeData = {
   group: [
-    { image: "/Frontend/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/Frontend/images/group2.webp", title: "Group Trip to Manali" },
-    { image: "/Frontend/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
+    { image: "/Backend/public/images/group1.jpg", title: "Group Trip to Bali" },
+    { image: "/Backend/public/images/group2.webp", title: "Group Trip to Manali" },
+    { image: "/Backend/public/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
   ],
   honeymoon: [
-    { image: "/Frontend/images/hero-place1.jpg", title: "Romantic Paris" },
-    { image: "/Frontend/images/hero-place2.jpg", title: "Maldives Escape" },
-    { image: "/Frontend/images/group2.webp", title: "Swiss Honeymoon" },
+    { image: "/Backend/public/images/hero-place1.jpg", title: "Romantic Paris" },
+    { image: "/Backend/public/images/hero-place2.jpg", title: "Maldives Escape" },
+    { image: "/Backend/public/images/group2.webp", title: "Swiss Honeymoon" },
   ],
   pilgrimage: [
-    { image: "/Frontend/images/group1.jpg", title: "Spiritual Varanasi" },
-    { image: "/Frontend/images/group2.webp", title: "Rameswaram Temple Tour" },
+    { image: "/Backend/public/images/group1.jpg", title: "Spiritual Varanasi" },
+    { image: "/Backend/public/images/group2.webp", title: "Rameswaram Temple Tour" },
   ],
   ayurveda: [
-    { image: "/Frontend/images/hero-place2.jpg", title: "Kerala Healing Retreat" },
+    { image: "/Backend/public/images/hero-place2.jpg", title: "Kerala Healing Retreat" },
   ],
   luxury: [
-    { image: "/Frontend/images/group3.jpg", title: "Luxury Dubai" },
-    { image: "/Frontend/images/group1.jpg", title: "Swiss Luxury Resorts" },
+    { image: "/Backend/public/images/group3.jpg", title: "Luxury Dubai" },
+    { image: "/Backend/public/images/group1.jpg", title: "Swiss Luxury Resorts" },
   ],
   adventure: [
-    { image: "/Frontend/images/group2.webp", title: "Skydiving Dubai" },
-    { image: "/Frontend/images/group3.jpg", title: "Trekking Himalayas" },
+    { image: "/Backend/public/images/group2.webp", title: "Skydiving Dubai" },
+    { image: "/Backend/public/images/group3.jpg", title: "Trekking Himalayas" },
   ],
 };
 
