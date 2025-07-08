@@ -1,0 +1,37 @@
+[
+  {
+    "userId": "user-1751972496202",
+    "name": "Admin",
+    "email": "admin@gmail.com",
+    "password": "admin",
+    "role": "admin"
+  },
+  {
+    "userId": "user-1751972550848",
+    "name": "guna",
+    "email": "g@gmail.com",
+    "password": "123",
+    "role": "user"
+  },
+  {
+    "userId": "user-1751972563691",
+    "name": "Avanthika",
+    "email": "avan@gmail.com",
+    "password": "avans",
+    "role": "agent"
+  },
+  {
+    "userId": "user-1751972576168",
+    "name": "sahana",
+    "email": "saha30@gmail.com",
+    "password": "sahana",
+    "role": "user"
+  },
+  {
+    "userId": "user-1751972754969",
+    "name": "Ram",
+    "email": "ram@ram.com",
+    "password": "ram",
+    "role": "user"
+  }
+]

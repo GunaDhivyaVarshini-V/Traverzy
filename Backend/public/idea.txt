@@ -56,3 +56,9 @@ for (let i = -n; i <= n; i++) {
 xhr=new XMLHttpRequest();
 xhr.open('GET','URL',true/false"based on whether other operations should wait or not")
 xhr.readyState()
+
+//08/07/2025
+-----Express-----
+1.npm install express-session 
+  -it will be added  node_modules and package.json
+  

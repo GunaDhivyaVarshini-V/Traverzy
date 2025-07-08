@@ -5,29 +5,29 @@ document.body.appendChild(script);
 //  Theme Cards Data
 const themeData = {
   group: [
-    { image: "/Backend/public/images/group1.jpg", title: "Group Trip to Bali" },
-    { image: "/Backend/public/images/group2.webp", title: "Group Trip to Manali" },
-    { image: "/Backend/public/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
+    { image: "/images/group1.jpg", title: "Group Trip to Bali" },
+    { image: "/images/group2.webp", title: "Group Trip to Manali" },
+    { image: "/images/group3.jpg", title: "Group Trip to Leh-Ladakh" },
   ],
   honeymoon: [
-    { image: "/Backend/public/images/hero-place1.jpg", title: "Romantic Paris" },
-    { image: "/Backend/public/images/hero-place2.jpg", title: "Maldives Escape" },
-    { image: "/Backend/public/images/group2.webp", title: "Swiss Honeymoon" },
+    { image: "/images/hero-place1.jpg", title: "Romantic Paris" },
+    { image: "/images/hero-place2.jpg", title: "Maldives Escape" },
+    { image: "/images/group2.webp", title: "Swiss Honeymoon" },
   ],
   pilgrimage: [
-    { image: "/Backend/public/images/group1.jpg", title: "Spiritual Varanasi" },
-    { image: "/Backend/public/images/group2.webp", title: "Rameswaram Temple Tour" },
+    { image: "/images/group1.jpg", title: "Spiritual Varanasi" },
+    { image: "/images/group2.webp", title: "Rameswaram Temple Tour" },
   ],
   ayurveda: [
-    { image: "/Backend/public/images/hero-place2.jpg", title: "Kerala Healing Retreat" },
+    { image: "/images/hero-place2.jpg", title: "Kerala Healing Retreat" },
   ],
   luxury: [
-    { image: "/Backend/public/images/group3.jpg", title: "Luxury Dubai" },
-    { image: "/Backend/public/images/group1.jpg", title: "Swiss Luxury Resorts" },
+    { image: "/images/group3.jpg", title: "Luxury Dubai" },
+    { image: "/images/group1.jpg", title: "Swiss Luxury Resorts" },
   ],
   adventure: [
-    { image: "/Backend/public/images/group2.webp", title: "Skydiving Dubai" },
-    { image: "/Backend/public/images/group3.jpg", title: "Trekking Himalayas" },
+    { image: "/images/group2.webp", title: "Skydiving Dubai" },
+    { image: "/images/group3.jpg", title: "Trekking Himalayas" },
   ],
 };
 
@@ -81,7 +81,7 @@ function showTheme(theme) {
 // DOM Content Loaded
 document.addEventListener("DOMContentLoaded", () => {
 //Navbar Loading
- fetch("http://localhost:3000/api/nav")
+ fetch("http://localhost:3000/api/v1/nav")
   .then((response) => response.json())
   .then((data) => {
     const menu = document.getElementById("menu");
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // Trending Cards
-  fetch("http://localhost:3000/api/trendingImages")
+  fetch("http://localhost:3000/api/v1/trendingImages")
     .then((res) => res.json())
     .then((trendingData) => {
       const trendingContainer = document.getElementById("trending-cards");
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Fetch package data and render
-  fetch("http://localhost:3000/api/packageImages")
+  fetch("http://localhost:3000/api/v1/packageImages")
     .then((res) => res.json())
     .then((data) => {
       packageData = data;

@@ -1,7 +1,7 @@
 const packages = [
   {
     name: "Paris",
-    image: "/Backend/public/images/group1.jpg",
+    image: "/images/group1.jpg",
     description:
       "Experience the romance, culture, and cuisine of the City of Lights.",
     category: "cultural",
@@ -11,7 +11,7 @@ const packages = [
   },
   {
     name: "Maldives",
-    image: "/Backend/public/images/group1.jpg",
+    image: "/images/group1.jpg",
     description: "Crystal-clear waters, white sands, and luxury at its finest.",
     category: "beach",
     duration: "4-7",
@@ -20,7 +20,7 @@ const packages = [
   },
   {
     name: "Bali",
-    image: "/Backend/public/images/group1.jpg",
+    image: "/images/group1.jpg",
     description: "A tropical paradise of beaches, temples, and lush greenery.",
     category: "hill",
     duration: "8+",
@@ -29,7 +29,7 @@ const packages = [
   },
   {
     name: "Switzerland",
-    image: "/Backend/public/images/group1.jpg",
+    image: "/images/group1.jpg",
     description:
       "Snow-capped mountains, scenic train rides, and chocolate heaven.",
     category: "beach",
@@ -39,7 +39,7 @@ const packages = [
   },
   {
     name: "Dubai",
-    image: "/Backend/public/images/group1.jpg",
+    image: "/images/group1.jpg",
     description: "Experience luxury, deserts, and the futuristic skyline.",
     category: "beach",
     duration: "4-7",
