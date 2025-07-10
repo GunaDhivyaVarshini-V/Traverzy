@@ -87,39 +87,16 @@ function authenticate() {
       .catch((err) => alert(err.message));
   });
 
-  //edit
-  const usersFile = path.join(__dirname, "..", "data", "users.json");
-
-  router.put("/user/:email", (req, res) => {
-    const email = req.params.email;
-    const { name, role } = req.body;
-
-    console.log("PUT request received for:", email);
-    console.log("New name:", name, "New role:", role);
-    console.log("User file path:", usersFile);
-
-    try {
-      let users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-      const index = users.findIndex((u) => u.email === email);
-
-      if (index === -1)
-        return res.status(404).json({ error: "User not found" });
-
-      users[index].name = name;
-      users[index].role = role;
-
-      fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-      res.json({ message: "User updated successfully" });
-    } catch (err) {
-      console.error("Error updating user:", err);
-      res.status(500).json({ error: "Failed to update user" });
-    }
-  });
-
   //Logout
   $(document).on("click", "#logoutBtn", function () {
-    fetch("http://localhost:3000/api/v1/auth/logout", {
-      credentials: "include",
-    }).then(() => location.reload());
-  });
+  fetch("/api/v1/auth/logout", {
+    credentials: "include",
+  })
+    .then((res) => res.json())
+    .then(() => {
+      alert("Logged out");
+      location.reload();
+    })
+    .catch(() => alert("Logout failed"));
+});
 }

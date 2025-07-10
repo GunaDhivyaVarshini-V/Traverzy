@@ -6,18 +6,18 @@ fetch("/api/v1/auth/current-user", {
     const user = data.user;
     if (!user || user.role !== "admin") {
       alert("Access Denied: Admins only.");
-      window.location.href = "/pages/home.html";
+      window.location.href = "/api/v1/users/dashboard";
     } else {
       loadAdminDashboard();
     }
   })
   .catch(() => {
     alert("Please log in as admin.");
-    window.location.href = "/pages/home.html";
+    window.location.href = "/api/v1/users/dashboard";
   });
 
 function loadAdminDashboard() {
-  fetch("/api/v1/auth/all-users", {
+  fetch("/api/v1/users/all-users", {
     credentials: "include",
   })
     .then((res) => res.json())
@@ -48,7 +48,7 @@ function loadAdminDashboard() {
 
 function deleteUser(email) {
   if (!confirm("Are you sure you want to delete this user?")) return;
-  fetch(`/api/v1/auth/user/${email}`, {
+  fetch(`/api/v1/users/user/${email}`, {
     method: "DELETE",
     credentials: "include",
   })
@@ -58,10 +58,12 @@ function deleteUser(email) {
       loadAdminDashboard();
     })
     .catch(() => alert("Failed to delete user"));//redirect to home
+     console.log("Updated users.json:", users);
+
 }
 
 function editUser(email) {
-  fetch(`/api/v1/auth/user/${email}`, {
+  fetch(`/api/v1/users/user/${email}`, {
     credentials: "include",
   })
     .then((res) => res.json())
@@ -77,7 +79,7 @@ function editUser(email) {
         return;
       }
 
-      fetch(`/api/v1/auth/user/${email}`, {
+      fetch(`/api/v1/users/user/${email}`, {
         method: "PUT",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

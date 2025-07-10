@@ -17,7 +17,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
   secret: "yourSecretKey",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    secure: false, 
+    httpOnly: true,
+  },
 }));
 
 //routes
