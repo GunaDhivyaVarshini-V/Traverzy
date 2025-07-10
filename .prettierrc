@@ -1,0 +1,11 @@
+{
+    "plugins": ["prettier-plugin-pug"],
+    "overrides":[
+        {
+            "files":"*.jade",
+            "options":{
+                "parser":"pug"
+            }
+        }
+    ]
+}

@@ -10,7 +10,7 @@ function authenticate() {
             </svg>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            ${user.role === "admin" ? '<li><a class="dropdown-item" href="/pages/admin.html">Admin Panel</a></li>' : ""}
+            ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/dashboard">Admin Panel</a></li>' : ""}
             <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
           </ul>
         </div>
@@ -21,10 +21,10 @@ function authenticate() {
 
   // Get current user
   fetch("http://localhost:3000/api/v1/auth/current-user", {
-    credentials: "include"
+    credentials: "include",
   })
-    .then(res => res.ok ? res.json() : null)
-    .then(data => {
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
       if (data?.user) updateNavbar(data.user);
     });
 
@@ -36,24 +36,29 @@ function authenticate() {
     const password = $("#regPassword").val().trim();
     const role = $("#regRole").val();
 
-    if (!name || !email || !password || !role) return alert("Please fill all fields");
+    if (!name || !email || !password || !role)
+      return alert("Please fill all fields");
 
     fetch("http://localhost:3000/api/v1/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, role })
+      body: JSON.stringify({ name, email, password, role }),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         alert(data.message || "Registration done");
-        bootstrap.Modal.getInstance(document.getElementById("registerModal")).hide();
-        bootstrap.Modal.getOrCreateInstance(document.getElementById("loginModal")).show();
+        bootstrap.Modal.getInstance(
+          document.getElementById("registerModal"),
+        ).hide();
+        bootstrap.Modal.getOrCreateInstance(
+          document.getElementById("loginModal"),
+        ).show();
       })
-      .catch(err => alert("Registration failed"));
+      .catch((err) => alert("Registration failed"));
   });
 
   //Login
-  $(document).on("submit", "#loginModal form", function (e) {
+  $(document).on("submit", "form#loginForm", function (e) {
     e.preventDefault();
     const email = $("#loginEmail").val().trim();
     const password = $("#loginPassword").val().trim();
@@ -62,26 +67,59 @@ function authenticate() {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     })
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error("Invalid credentials");
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         updateNavbar(data.user);
-        bootstrap.Modal.getInstance(document.getElementById("loginModal")).hide();
-        document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+        bootstrap.Modal.getInstance(
+          document.getElementById("loginModal"),
+        ).hide();
+        document
+          .querySelectorAll(".modal-backdrop")
+          .forEach((el) => el.remove());
         document.body.classList.remove("modal-open");
         document.body.style = "";
       })
-      .catch(err => alert(err.message));
+      .catch((err) => alert(err.message));
+  });
+
+  //edit
+  const usersFile = path.join(__dirname, "..", "data", "users.json");
+
+  router.put("/user/:email", (req, res) => {
+    const email = req.params.email;
+    const { name, role } = req.body;
+
+    console.log("PUT request received for:", email);
+    console.log("New name:", name, "New role:", role);
+    console.log("User file path:", usersFile);
+
+    try {
+      let users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
+      const index = users.findIndex((u) => u.email === email);
+
+      if (index === -1)
+        return res.status(404).json({ error: "User not found" });
+
+      users[index].name = name;
+      users[index].role = role;
+
+      fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+      res.json({ message: "User updated successfully" });
+    } catch (err) {
+      console.error("Error updating user:", err);
+      res.status(500).json({ error: "Failed to update user" });
+    }
   });
 
   //Logout
   $(document).on("click", "#logoutBtn", function () {
     fetch("http://localhost:3000/api/v1/auth/logout", {
-      credentials: "include"
+      credentials: "include",
     }).then(() => location.reload());
   });
 }

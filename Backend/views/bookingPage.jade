@@ -1,0 +1,133 @@
+include ./includes/header
+include ./includes/navbar
+
+block styles
+  link(rel="stylesheet", href="/css/style.css")
+  link(rel="stylesheet", href="/css/bookingPage.css")
+  link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css")
+
+block body
+  #nav-bar
+  header.hero
+    .slider
+      img(src="/images/italy.jpg", alt="Slide 1")
+      img(src="/images/italy2.jpg", alt="Slide 2")
+      img(src="/images/italy3.jpg", alt="Slide 3")
+    .overlay#destination-herotext
+      h1 Lake como, Italy
+      p Home to romantic villas and revamped waterfront promenades
+  main
+    section.package-details
+      h2 Package Details
+      p
+        strong Duration:
+        |  5 Days / 4 Nights
+      ul
+        li 🏞 Scenic tours and local experiences
+        li 🏨 Comfortable accommodation
+        li 🚍 Guided transport
+      h2 Price & Inclusions
+      p
+        strong Total Cost:
+        |  ₹75,000 per person
+      ul
+        li ✅ Daily breakfast & dinner
+        li ✅ Entry tickets for attractions
+        li ✅ Airport pickup & drop
+      h2 What’s Not Included
+      ul
+        li ❌ Airfare from home city (unless selected)
+        li ❌ Personal expenses
+        li ❌ Travel Insurance
+      button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#staticBackdrop") Book now
+
+      .modal.fade#staticBackdrop(tabindex="-1", aria-labelledby="staticBackdropLabel", aria-hidden="true")
+        .modal-dialog#package-form
+          .modal-content
+            .modal-header
+              h5.modal-title#staticBackdropLabel Enter the Details
+              button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+            .modal-body
+              form(action="#")
+                .mb-3
+                  label(for="firstName") First Name:
+                  input(type="text", name="name", id="firstName")
+                  br
+                  small#nameError
+                .mb-3
+                  label(for="lastName") Last Name:
+                  input(type="text", name="name", id="lastName")
+                .mb-3
+                  label(for="bookingEmail") Email:
+                  input(type="email", id="bookingEmail")
+            .modal-footer
+              button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
+              button.btn.btn-primary(type="button") Next
+
+    section.package-details
+      h2 Customize Your Package
+      form.customization-form
+        label(for="hotel") Hotel Type:
+        select#hotel(name="hotel")
+          option(value="3star") 3 Star
+          option(value="4star") 4 Star
+          option(value="5star") 5 Star
+
+        label(for="food") Food Preference:
+        select#food(name="food")
+          option(value="veg") Vegetarian
+          option(value="nonveg") Non-Vegetarian
+          option(value="both") Both
+
+        label(for="transport") Transport Mode:
+        select#transport(name="transport")
+          option(value="flight") Flight
+          option(value="train") Train
+          option(value="bus") Bus
+
+        button(type="submit", id="customization-id") Confirm Customization
+
+    section#package-form(style="display: none")
+      .package-form-content
+        span.closeBtn &times;
+        h2 Book Your Package
+        form#bookingForm
+          label(for="name") Full Name:
+          input(type="text", id="name")
+          br
+          small#error-msg#nameError(style="color: red; display: none")
+
+          label(for="email") Email:
+          input(type="email", id="email", placeholder="xyz@gmail.com")
+          small#error-msg#emailError.text-danger Invalid email address.
+          br
+
+          label(for="travel-from") Preferred Travel Date: (From)
+          input(type="date", id="travel-from")
+          small#error-msg#dateErrorFrom.text-danger
+          small#error-msg#dateError2.text-danger
+          br
+
+          label(for="travel-to") Preferred Travel Date: (To)
+          input(type="date", id="travel-to")
+          small#error-msg#dateErrorTo.text-danger
+          br
+
+          button(type="submit") Book Now
+
+    section.gallery
+      h2 Image Gallery
+      .gallery-grid
+        each img in ["italy.jpg", "italy2.jpg", "italy3.jpg", "group1.jpg", "group2.webp", "group3.jpg"]
+          img(src=`/images/${img}`, alt="Italy View")
+
+  footer.site-footer
+    p &copy; 2025 Traverzy. All Rights Reserved
+    p
+      a(href="#") Privacy Policy
+      a(href="#") Terms of Use
+
+block scripts
+  script(src="/js/script.js")
+  script(src="/js/bookingPage.js")
+  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js")

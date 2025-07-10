@@ -1,0 +1,21 @@
+include ./includes/navbar.jade
+
+block styles
+  link(rel="stylesheet", href="/css/admin.css")
+
+block body
+  h2.admin-title Total Users: 
+    span#user-count
+
+  table.admin-table.table.table-striped
+    thead
+      tr
+        th #
+        th Name
+        th Email
+        th Role
+        th Actions
+    tbody#user-list
+
+block scripts
+  script(src="/js/admin.js")

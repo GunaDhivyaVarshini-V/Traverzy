@@ -14,23 +14,9 @@
     "role": "user"
   },
   {
-    "userId": "user-1751972563691",
-    "name": "Avanthika",
-    "email": "avan@gmail.com",
-    "password": "avans",
-    "role": "agent"
-  },
-  {
-    "userId": "user-1751972576168",
-    "name": "sahana",
-    "email": "saha30@gmail.com",
-    "password": "sahana",
-    "role": "user"
-  },
-  {
-    "userId": "user-1751972754969",
-    "name": "Ram",
-    "email": "ram@ram.com",
+    "userId": "user-1752126631116",
+    "name": "ram",
+    "email": "ram@gmail.com",
     "password": "ram",
     "role": "user"
   }
