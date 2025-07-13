@@ -1,6 +1,6 @@
 const navBar = [
-  { id: "homeID", name: "Home", href: "/pages/home.html" },
-  { id: "packagesID", name: "Packages", href: "/pages/packages.html" },
+  { id: "homeID", name: "Home", href: "/home" },
+  { id: "packagesID", name: "Packages", href: "/packages" },
   { id: "offerID", name: "Offers", href: "#Offers" },
   { id: "contactID", name: "Contact", href: "#contact" }
 ];

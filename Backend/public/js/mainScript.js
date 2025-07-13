@@ -1,6 +1,6 @@
-const script = document.createElement("script");
-script.src ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
-document.body.appendChild(script);
+const bootstrapScript = document.createElement("script");
+bootstrapScript.src ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
+document.body.appendChild(bootstrapScript);
 
 //  Theme Cards Data
 const themeData = {

@@ -11,16 +11,29 @@ app.get('/',(req,res)=>{
     "title":"Traverzy-Your Ultimate Travel Partner"
   })
 })
+app.get('/home',(req,res)=>{
+  res.render("home.jade",{
+    "title":"Traverzy-Your Ultimate Travel Partner"
+  })
+})
+app.get('/packages', (req, res) => {
+  res.render('packages.jade',{
+    "title":"Packages"
+  }); 
+});
+
 app.set('view engine','jade')//setting jade as view engine
 app.set('views',path.join(__dirname,'views'))//jade path setting
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
-  secret: "yourSecretKey",
+  secret: "secret",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false, 
   cookie: {
-    secure: false, 
     httpOnly: true,
+    maxAge:1000*60*60,
+    secure: false,
+
   },
 }));
 

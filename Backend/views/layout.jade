@@ -1,0 +1,17 @@
+//- layout.pug
+doctype html
+html(lang="en")
+  head
+    title Traverzy | Travel the World
+  block styles
+   link(href="/css/style.css" rel="stylesheet")
+  body
+    include ./includes/header
+    include ./includes/navbar
+
+    block body
+
+    include ./includes/footer
+
+    block scripts
+      script(src="/js/mainScript.js")

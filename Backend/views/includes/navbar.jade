@@ -5,16 +5,15 @@ block styles
   link(href="/css/style.css", rel="stylesheet")
 block body
   // Navbar Section
-  header
-    nav.navbar
-      img.logo(src="/images/Logo.png", alt="Logo")
-      ul.menu#menu
-      button.btn.login-btn#loginBtn(
-        type="button",
-        data-bs-toggle="modal",
-        data-bs-target="#loginModal"
-      ) Login
-
+  div#navbarContainer
+  nav.navbar
+    img.logo(src="/images/Logo.png", alt="Logo")
+    ul.menu#menu
+    button.btn.login-btn#loginBtn(
+      type="button",
+      data-bs-toggle="modal",
+      data-bs-target="#loginModal"
+    ) Login
   //Login Modal
   .modal.fade#loginModal(tabindex="-1", aria-labelledby="loginModalLabel", aria-hidden="true")
     .modal-dialog.modal-dialog-centered
@@ -32,8 +31,7 @@ block body
               label.form-label(for="loginPassword") Password
               input#loginPassword.form-control(type="password", placeholder="••••••••")
             button.btn.btn-primary.w-100(type="submit") Login
-            p.text-center.mt-3
-              | Don't have an account? 
+            p.text-center.mt-3 Don't have an account? 
               a(
                 href="#",
                 data-bs-toggle="modal",
@@ -67,8 +65,7 @@ block body
                 option(value="user") User
                 option(value="agent") Travel Agent
             button.btn.btn-success.w-100(type="submit") Sign Up
-          p.text-center.mt-3
-            | Already have an account? 
+          p.text-center.mt-3 Already have an account? 
             a(
               href="#",
               data-bs-toggle="modal",
@@ -77,5 +74,7 @@ block body
             ) Login
 
   //script
+  script(src="https://code.jquery.com/jquery-3.7.1.min.js")
   script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js")
   script(src="/js/mainScript.js")
+  script(src="/js/authentication.js")

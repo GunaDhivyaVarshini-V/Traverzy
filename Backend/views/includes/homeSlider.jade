@@ -1,0 +1,26 @@
+header.hero#hero
+  .slider
+    img(src="/images/bg_image1.jpg" alt="Slide 1")
+    img(src="/images/hero-place2.jpg" alt="Slide 2")
+    img(src="/images/hero-place1.jpg" alt="Slide 3")
+  .overlay
+    h1 Explore Exotic Places
+    p Countless Memories!
+    .search-bar
+      input(type="text" placeholder="Enter Your Dream Destination!")
+      button Search
+    .theme-items
+      span(onclick="showTheme('group')") Group Departure
+      span(onclick="showTheme('honeymoon')") Honeymoon
+      span(onclick="showTheme('pilgrimage')") Pilgrimage
+      span(onclick="showTheme('ayurveda')") Ayurveda
+      span(onclick="showTheme('luxury')") Luxury
+      span(onclick="showTheme('adventure')") Adventure
+    #destination-suggestion
+      br
+      a(href="#filter-home")
+        p Not Sure?
+    .hero-slide-controls(style="text-align: center")
+      span.dot
+      span.dot
+      span.dot

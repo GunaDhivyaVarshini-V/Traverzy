@@ -1,22 +1,24 @@
 function authenticate() {
   function updateNavbar(user) {
-    if (user) {
-      const profileHTML = `
-        <div class="dropdown ms-2" id="profileMenu">
-          <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/dashboard">Admin Panel</a></li>' : ""}
-            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
-          </ul>
-        </div>
-      `;
-      $("#loginBtn").replaceWith(profileHTML);
-    }
+    const loginBtn = document.getElementById("loginBtn");
+    if (!loginBtn) return;
+
+    const profileHTML = `
+    <div class="dropdown ms-2" id="profileMenu">
+      <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+        </svg>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/dashboard">Admin Panel</a></li>' : ""}
+        <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  `;
+
+    $("#loginBtn").replaceWith(profileHTML);
   }
 
   // Get current user
@@ -26,7 +28,8 @@ function authenticate() {
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
       if (data?.user) updateNavbar(data.user);
-    });
+    })
+    .catch((err) => alert("current user catch"));
 
   // Register
   $(document).on("submit", "#registerForm", function (e) {
@@ -89,14 +92,13 @@ function authenticate() {
 
   //Logout
   $(document).on("click", "#logoutBtn", function () {
-  fetch("/api/v1/auth/logout", {
-    credentials: "include",
-  })
-    .then((res) => res.json())
-    .then(() => {
-      alert("Logged out");
-      location.reload();
+    fetch("/api/v1/auth/logout", {
+      credentials: "include",
     })
-    .catch(() => alert("Logout failed"));
-});
+      .then((res) => res.json())
+      .then(() => {
+        alert("Logged out");
+        window.location.href = "/";      })
+      .catch(() => alert("Logout failed"));
+  });
 }

@@ -1,11 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 const usersFile = path.join(__dirname, "..", "data", "users.json");
-console.log("🛠️ Using users file at:", usersFile);
 
 exports.renderDashboard = (req, res) => {
   const users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  res.render("admin", { users });
+  res.render("admin", {
+  users,
+  currentUser: req.session.user || null
+});
 };
 
 exports.register = (req, res) => {
@@ -43,7 +45,15 @@ exports.login = (req, res) => {
   }
 
   req.session.user = user;
-  res.json({ message: "Login successful", user: { name: user.name, role: user.role } });
+  res.cookie("sesssionId",user.userId,{
+    "httpOnly":true,
+    "MaxAge":1000*60*60,
+    "secure":false
+  }) 
+  res.json({
+    message: "Login successful",
+    user: { name: user.name, role: user.role },
+  });
 };
 
 exports.logout = (req, res) => {
@@ -55,10 +65,10 @@ exports.logout = (req, res) => {
 };
 
 exports.getCurrentUser = (req, res) => {
-  if (!req.session.user) return res.status(401).json({ error: "Not logged in" });
+  if (!req.session.user)
+    return res.status(401).json({ error: "Not logged in" });
   res.json({ user: req.session.user });
 };
-
 
 exports.getAllUsers = (req, res) => {
   const users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
@@ -74,27 +84,39 @@ exports.getUserByEmail = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  const email = req.params.email;
+  const userId = req.params.userId;
   const { name, role } = req.body;
   let users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  const index = users.findIndex((u) => u.email === email);
+  const index = users.findIndex((u) => u.userId === userId);
   if (index === -1) return res.status(404).json({ error: "User not found" });
 
   users[index].name = name;
   users[index].role = role;
   fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+  if (req.session.user && req.session.user.userId === userId) {
+    req.session.user.name = name;
+    req.session.user.role = role;
+    req.session.save();
+  }
   res.json({ message: "User updated successfully" });
 };
 
 exports.deleteUser = (req, res) => {
-  const email = req.params.email;
+  const userId = req.params.userId;
   let users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  const filtered = users.filter((u) => u.email !== email);
+  const filtered = users.filter((u) => u.userId !== userId);
 
   if (filtered.length === users.length) {
     return res.status(404).json({ error: "User not found" });
   }
 
   fs.writeFileSync(usersFile, JSON.stringify(filtered, null, 2));
-  res.json({ message: "User deleted successfully" });
+  if (req.session.user && req.session.user.userId === userId) {
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      return res.status(200).json({ message: "You were deleted. Logged out." });
+    });
+  } else {
+    res.json({ message: "User deleted successfully" });
+  }
 };

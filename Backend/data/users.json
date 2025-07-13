@@ -14,30 +14,24 @@
     "role": "user"
   },
   {
-    "userId": "user-1752143018734",
-    "name": "avanthika",
-    "email": "avans30@gmail.com",
-    "password": "avans",
-    "role": "user"
-  },
-  {
-    "userId": "user-1752143046328",
-    "name": "ram",
-    "email": "ram@gmail.com",
-    "password": "ram",
-    "role": "user"
-  },
-  {
-    "userId": "user-1752144948671",
-    "email": "hari@gmail.com",
-    "password": "hari",
-    "role": "user"
-  },
-  {
-    "userId": "user-1752146174224",
+    "userId": "user-1752143099999",
     "name": "avanthika1",
     "email": "avans301@gmail.com",
     "password": "avans",
+    "role": "user"
+  },
+  {
+    "userId": "user-1752143088888",
+    "name": "testNew1",
+    "email": "avans301@gmail.com",
+    "password": "avans",
+    "role": "user"
+  },
+  {
+    "userId": "user-1752229269240",
+    "name": "test",
+    "email": "test@gmail.com",
+    "password": "test",
     "role": "user"
   }
 ]
