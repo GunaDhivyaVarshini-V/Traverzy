@@ -1,11 +1,44 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const userModel =require("./models/user")
 const path = require("path");
 const app = express();
-const session = require("express-session");
+// const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
+app.set('view engine','jade')//setting jade as view engine
+app.set('views',path.join(__dirname,'views'))//jade path setting
+app.use(express.static(path.join(__dirname, "public")));
+
+mongoose.connect('mongodb://localhost:27017/Traverzy')
+.then(()=>{
+  console.log("Mongodb connected")
+})
+.catch(err=>{
+  console.error("mongodb connection failed",err.message)
+})
+
+
+userModel.find({})
+.then((users)=>{console.log(users)})
+.catch(err=>{
+  console.error("cannot fetch user",err.message)
+})
+// app.use(session({
+//   secret: "secret",
+//   resave: false,
+//   saveUninitialized: false, 
+//   cookie: {
+//     httpOnly: true,
+//     maxAge:1000*60*60,
+//     secure: false,
+
+//   },
+// }));
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.get('/',(req,res)=>{
   res.render("home.jade",{
     "title":"Traverzy-Your Ultimate Travel Partner"
@@ -21,21 +54,6 @@ app.get('/packages', (req, res) => {
     "title":"Packages"
   }); 
 });
-
-app.set('view engine','jade')//setting jade as view engine
-app.set('views',path.join(__dirname,'views'))//jade path setting
-app.use(express.static(path.join(__dirname, "public")));
-app.use(session({
-  secret: "secret",
-  resave: false,
-  saveUninitialized: false, 
-  cookie: {
-    httpOnly: true,
-    maxAge:1000*60*60,
-    secure: false,
-
-  },
-}));
 
 //routes
 

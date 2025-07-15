@@ -1,122 +1,160 @@
-const fs = require("fs");
-const path = require("path");
-const usersFile = path.join(__dirname, "..", "data", "users.json");
+const jwt = require("jsonwebtoken");
+const userModel = require("../models/user");
 
-exports.renderDashboard = (req, res) => {
-  const users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  res.render("admin", {
-  users,
-  currentUser: req.session.user || null
-});
+const secret = "jwt_token";
+
+//Dashboard
+exports.renderDashboard = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    res.render("admin", {
+      users,
+      currentUser: req.user || null
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error rendering dashboard", error });
+  }
 };
 
-exports.register = (req, res) => {
+//register
+exports.register = async (req, res) => {
   const { name, email, password, role } = req.body;
-  let users = [];
 
   try {
-    users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  } catch {}
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
 
-  if (users.find((u) => u.email === email)) {
-    return res.status(400).json({ error: "User already exists" });
-  }
-
-  const newUser = {
-    userId: `user-${Date.now()}`,
-    name,
-    email,
-    password,
-    role,
-  };
-
-  users.push(newUser);
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-  res.json({ message: "Registered successfully" });
-};
-
-exports.login = (req, res) => {
-  const { email, password } = req.body;
-  const users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  const user = users.find((u) => u.email === email && u.password === password);
-
-  if (!user) {
-    return res.status(401).json({ error: "Invalid credentials" });
-  }
-
-  req.session.user = user;
-  res.cookie("sesssionId",user.userId,{
-    "httpOnly":true,
-    "MaxAge":1000*60*60,
-    "secure":false
-  }) 
-  res.json({
-    message: "Login successful",
-    user: { name: user.name, role: user.role },
-  });
-};
-
-exports.logout = (req, res) => {
-  console.log("Logging out:", req.session.user?.email);
-  req.session.destroy(() => {
-    res.clearCookie("connect.sid");
-    res.json({ message: "Logged out" });
-  });
-};
-
-exports.getCurrentUser = (req, res) => {
-  if (!req.session.user)
-    return res.status(401).json({ error: "Not logged in" });
-  res.json({ user: req.session.user });
-};
-
-exports.getAllUsers = (req, res) => {
-  const users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  res.status(200).json(users);
-};
-
-exports.getUserByEmail = (req, res) => {
-  const email = req.params.email;
-  const users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  const user = users.find((u) => u.email === email);
-  if (!user) return res.status(404).json({ error: "User not found" });
-  res.json(user);
-};
-
-exports.updateUser = (req, res) => {
-  const userId = req.params.userId;
-  const { name, role } = req.body;
-  let users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  const index = users.findIndex((u) => u.userId === userId);
-  if (index === -1) return res.status(404).json({ error: "User not found" });
-
-  users[index].name = name;
-  users[index].role = role;
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-  if (req.session.user && req.session.user.userId === userId) {
-    req.session.user.name = name;
-    req.session.user.role = role;
-    req.session.save();
-  }
-  res.json({ message: "User updated successfully" });
-};
-
-exports.deleteUser = (req, res) => {
-  const userId = req.params.userId;
-  let users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
-  const filtered = users.filter((u) => u.userId !== userId);
-
-  if (filtered.length === users.length) {
-    return res.status(404).json({ error: "User not found" });
-  }
-
-  fs.writeFileSync(usersFile, JSON.stringify(filtered, null, 2));
-  if (req.session.user && req.session.user.userId === userId) {
-    req.session.destroy(() => {
-      res.clearCookie("connect.sid");
-      return res.status(200).json({ message: "You were deleted. Logged out." });
+    const newUser = new userModel({
+      userId: `user-${Date.now()}`,
+      name,
+      email,
+      password,
+      role
     });
-  } else {
+
+    await newUser.save();
+    res.json({ message: "Registered successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error registering user", error });
+  }
+};
+
+// Login
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await userModel.findOne({ email, password });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const token = jwt.sign(
+      {
+        userId: user.userId,
+        email: user.email,
+        role: user.role,
+        name: user.name
+      },
+      secret,
+      { expiresIn: "1h" }
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 3600000,
+    });
+
+    res.json({
+      message: "Login successful",
+      user: { name: user.name, role: user.role },token
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Login failed", error });
+  }
+};
+// Logout
+exports.logout = (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out" });
+};
+
+// Get Current User
+exports.getCurrentUser = (req, res) => {
+  if (!req.user)
+    return res.status(401).json({ error: "Not logged in" });
+  res.json({ user: req.user });
+};
+// Get All Users
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error });
+  }
+};
+// Get User by Email
+exports.getUserByEmail = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ email: req.params.email });
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+};
+// Get User by ID
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ userId: req.params.userId });
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+};
+// Update User
+exports.updateUser = async (req, res) => {
+  const { name, role } = req.body;
+
+  try {
+    const updatedUser = await userModel.findOneAndUpdate(
+      { userId: req.params.userId },
+      { name, role },
+      { new: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ error: "User not found" });
+
+    res.json({ message: "User updated successfully", updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating user", error });
+  }
+};
+// Delete User
+exports.deleteUser = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const deletedUser = await userModel.findOneAndDelete({ userId });
+
+    if (!deletedUser)
+      return res.status(404).json({ error: "User not found" });
+
+    // If the current user is deleting themselves
+    if (req.user && req.user.userId === userId) {
+      res.clearCookie("token");
+      return res.status(200).json({ message: "You were deleted. Logged out." });
+    }
+
     res.json({ message: "User deleted successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting user", error });
   }
 };

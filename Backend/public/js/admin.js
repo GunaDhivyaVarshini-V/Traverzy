@@ -1,26 +1,17 @@
-// Check current user and load admin dashboard if authorized
-fetch("/api/v1/auth/current-user", {
-  credentials: "include",
-})
-  .then((res) => (res.ok ? res.json() : Promise.reject()))
-  .then((data) => {
-    const user = data.user;
-    if (!user || user.role !== "admin") {
-      alert("Access Denied: Admins only.");
-      window.location.href = "/";
-    } else {
-      loadAdminDashboard();
-    }
-  })
-  .catch(() => {
-    alert("Please log in as admin.");
-    window.location.href = "/";
-  });
+function getToken() {
+  return localStorage.getItem("token");
+}
 
 // Loads all users and renders the admin dashboard
 function loadAdminDashboard() {
+   const token = getToken();
+  console.log("TOKEN:frmadmin", token);
+  if (!token) return;
+  console.log("Calling /all-users with token:", token);
   fetch("/api/v1/users/all-users", {
-    credentials: "include",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to fetch users");
@@ -53,15 +44,20 @@ function loadAdminDashboard() {
       console.error("Dashboard load error:", err);
       alert("Failed to load user data.");
     });
+    
 }
 
 // Delete
 function deleteUser(userId) {
   if (!confirm("Are you sure you want to delete this user?")) return;
-
+const token = getToken();
+  console.log("TOKEN inside deleteUser:", token);
+  if (!token) return;
   fetch(`/api/v1/users/user/${userId}`, {
     method: "DELETE",
-    credentials: "include",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to delete user");
@@ -79,8 +75,13 @@ function deleteUser(userId) {
 
 //Edit
 function editUser(userId) {
-  fetch(`/api/v1/users/user/${userId}`, {
-    credentials: "include",
+  const token = getToken();
+  console.log("TOKEN inside edit", token);
+  if (!token) return;
+  fetch(`/api/v1/users/user/id/${userId}`, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to fetch user");
@@ -100,22 +101,24 @@ function editUser(userId) {
 
       return fetch(`/api/v1/users/user/${userId}`, {
         method: "PUT",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ name: newName, role }),
       });
     })
     .then((res) => {
-      if (!res) return;
       if (!res.ok) throw new Error("Failed to update user");
       return res.json();
     })
     .then((data) => {
-      if (!data) return;
       alert(data.message);
 
       return fetch("/api/v1/auth/current-user", {
-        credentials: "include",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       });
     })
     .then((res) => {
@@ -129,11 +132,16 @@ function editUser(userId) {
         alert("You are no longer an admin. Redirecting...");
         window.location.href = "/";
       } else {
-        loadAdminDashboard(); 
+        loadAdminDashboard();
       }
     })
     .catch((err) => {
       console.error("Edit user error:", err);
-      alert("Failed to update user.");
+      alert(err.message || "Failed to update user.");
     });
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  console.log("Admin.js DOM loaded. Token:", getToken());
+  loadAdminDashboard();
+});

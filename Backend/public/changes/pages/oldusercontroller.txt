@@ -1,0 +1,133 @@
+const fs = require("fs");
+const path = require("path");
+const jwt = require("jsonwebtoken");
+// const usersFile = path.join(__dirname, "..", "data", "users.json");
+const secret="jwt_token"
+const userModel=require("../models/user")
+exports.renderDashboard = (req, res) => {
+  const users = loadUsers();
+  res.render("admin", {
+  users,
+  currentUser: req.user || null
+});
+};
+
+exports.register = (req, res) => {
+  const { name, email, password, role } = req.body;
+  const users = loadUsers();
+
+  if (users.find((u) => u.email === email)) {
+    return res.status(400).json({ error: "User already exists" });
+  }
+
+  const newUser = {
+    userId: `user-${Date.now()}`,
+    name,
+    email,
+    password,
+    role,
+  };
+
+  users.push(newUser);
+  saveUsers(users);
+  res.json({ message: "Registered successfully" });
+};
+
+exports.login = (req, res) => {
+  const { email, password } = req.body;
+  const users = loadUsers();
+  const user = users.find((u) => u.email === email && u.password === password);
+
+  if (!user) {
+    return res.status(401).json({ error: "Invalid credentials" });
+  }
+
+   const token = jwt.sign(
+    { userId: user.userId, email: user.email, role: user.role, name: user.name },
+    secret,
+    { expiresIn: "1h" }
+  );
+
+  // req.session.user = user;
+  res.cookie("token",token,{
+    "httpOnly":true,
+    "secure":false,
+    "maxAge":3600000,
+    
+  }) 
+  res.json({
+    message: "Login successful",
+    user: { name: user.name, role: user.role },
+  });
+};
+
+exports.logout = (req, res) => {
+      res.clearCookie("token");
+    res.json({ message: "Logged out" });
+};
+
+exports.getCurrentUser = (req, res) => {
+  if (!req.user)
+    return res.status(401).json({ error: "Not logged in" });
+  res.json({ user: req.user });
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error });
+  }
+};
+
+exports.getUserByEmail = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ email: req.params.email });
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+};
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ userId: req.params.userId });
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+};
+
+exports.updateUser = (req, res) => {
+  const userId = req.params.userId;
+  const { name, role } = req.body;
+  let users = loadUsers();
+  const index = users.findIndex((u) => u.userId === userId);
+  if (index === -1) return res.status(404).json({ error: "User not found" });
+
+  users[index].name = name;
+  users[index].role = role;
+  saveUsers(users);
+  const updatedUser = users[index];
+  res.json({ message: "User updated successfully",updatedUser});
+};
+
+exports.deleteUser = (req, res) => {
+  const userId = req.params.userId;
+  let users = loadUsers();
+  const filtered = users.filter((u) => u.userId !== userId);
+
+  if (filtered.length === users.length) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  saveUsers(filtered);
+  if (req.user.userId === userId) {
+      res.clearCookie("token");
+      return res.status(200).json({ message: "You were deleted. Logged out." });
+  } else {
+    res.json({ message: "User deleted successfully" });
+  }
+};

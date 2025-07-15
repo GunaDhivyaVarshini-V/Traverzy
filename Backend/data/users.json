@@ -14,23 +14,16 @@
     "role": "user"
   },
   {
-    "userId": "user-1752143099999",
-    "name": "avanthika1",
-    "email": "avans301@gmail.com",
-    "password": "avans",
+    "userId": "user-1752491769272",
+    "name": "test1",
+    "email": "test1@gmail.com",
+    "password": "test",
     "role": "user"
   },
   {
-    "userId": "user-1752143088888",
-    "name": "testNew1",
-    "email": "avans301@gmail.com",
-    "password": "avans",
-    "role": "user"
-  },
-  {
-    "userId": "user-1752229269240",
-    "name": "test",
-    "email": "test@gmail.com",
+    "userId": "user-1752492699966",
+    "name": "test2",
+    "email": "test21@gmail.com",
     "password": "test",
     "role": "user"
   }

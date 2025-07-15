@@ -1,4 +1,12 @@
+console.log("Token in localStorage at script load:", localStorage.getItem("token"));
+
+function getToken() {
+  return localStorage.getItem("token");
+}
 function authenticate() {
+  const token = getToken();
+  console.log("TOKEN inside authenticate:", token);
+  if (!token) return;
   function updateNavbar(user) {
     const loginBtn = document.getElementById("loginBtn");
     if (!loginBtn) return;
@@ -23,7 +31,9 @@ function authenticate() {
 
   // Get current user
   fetch("http://localhost:3000/api/v1/auth/current-user", {
-    credentials: "include",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
@@ -68,8 +78,9 @@ function authenticate() {
 
     fetch("http://localhost:3000/api/v1/auth/login", {
       method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ email, password }),
     })
       .then((res) => {
@@ -77,7 +88,18 @@ function authenticate() {
         return res.json();
       })
       .then((data) => {
-        updateNavbar(data.user);
+        if (!data.token) throw new Error("Token missing in response");
+        localStorage.setItem("token", data.token);
+        console.log(
+          "Token saved to localStorage:",
+          localStorage.getItem("token"),
+        );
+
+        // Ensure token is fully saved before reload
+        setTimeout(() => {
+          window.location.reload();
+        }, 300); // delay gives browser time to persist token
+
         bootstrap.Modal.getInstance(
           document.getElementById("loginModal"),
         ).hide();
@@ -92,13 +114,20 @@ function authenticate() {
 
   //Logout
   $(document).on("click", "#logoutBtn", function () {
+    const token = getToken();
+    console.log("TOKEN inside Logout:", token);
+    if (!token) return;
     fetch("/api/v1/auth/logout", {
-      credentials: "include",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
     })
       .then((res) => res.json())
       .then(() => {
+        localStorage.removeItem("token");
         alert("Logged out");
-        window.location.href = "/";      })
+        window.location.href = "/";
+      })
       .catch(() => alert("Logout failed"));
   });
 }

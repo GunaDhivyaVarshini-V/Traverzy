@@ -62,4 +62,6 @@ xhr.readyState()
 1.npm install express-session 
   -it will be added  node_modules and package.json
   
- 
+ //JWT 14/07/2025
+
+ 1.install JWT package npm install jsonwebtoken

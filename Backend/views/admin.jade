@@ -5,7 +5,7 @@ block styles
 
 block body
   h2.admin-title Total Users: 
-    span#user-count
+    span#user-count #{users.length}
 
   table.admin-table.table.table-striped
     thead
@@ -16,6 +16,15 @@ block body
         th Role
         th Actions
     tbody#user-list
+      each user, index in users
+        tr
+          td #{index + 1}
+          td #{user.name}
+          td #{user.email}
+          td #{user.role}
+          td
+            button.admin-btn.btn-edit(onclick=`editUser("${user.userId}")`) Edit
+            button.admin-btn.btn-delete(onclick=`deleteUser("${user.userId}")`) Delete
 
 block scripts
   script(src="https://code.jquery.com/jquery-3.7.1.min.js")
@@ -24,5 +33,4 @@ block scripts
   script(src="/js/mainScript.js")
   script(src="/js/authentication.js")
   script.
-   window.addEventListener("DOMContentLoaded", authenticate);
-   
+    window.addEventListener("DOMContentLoaded", authenticate);
