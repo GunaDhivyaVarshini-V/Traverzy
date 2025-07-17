@@ -1,6 +1,7 @@
 const script = document.createElement("script");
 script.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
 document.head.appendChild(script);
+
 function getToken() {
   return localStorage.getItem("token");
 }
@@ -26,7 +27,9 @@ function updateNavbar(user) {
         </svg>
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
-        ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/dashboard">Admin Panel</a></li>' : ""}
+        ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/dashboard">User data</a></li>' : ""}
+        ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/bookingDetails">Booking details</a></li>' : ""}
+        ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/approvePackages">Manage Package</a></li>' : ""}
         <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
       </ul>
     </div>
@@ -34,7 +37,6 @@ function updateNavbar(user) {
 
   $("#loginBtn").replaceWith(profileHTML);
 }
-
 
 function authenticate() {
   const token = getToken();
@@ -54,7 +56,7 @@ function authenticate() {
     })
     .catch((err) => {
       console.error("Auth error:", err);
-      removeToken(); 
+      removeToken();
     });
 }
 
@@ -79,12 +81,10 @@ function Login(e) {
       if (!data.token) throw new Error("Token missing in response");
 
       setToken(data.token);
-
       bootstrap.Modal.getInstance(document.getElementById("loginModal")).hide();
-      document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
+      document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
       document.body.classList.remove("modal-open");
       document.body.style = "";
-
       setTimeout(() => window.location.reload(), 300);
     })
     .catch((err) => {
@@ -146,9 +146,31 @@ function Logout(e) {
     });
 }
 
+function setupPasswordToggles() {
+  const toggles = [
+    { inputId: "loginPassword", iconId: "toggleLoginPassword" },
+    { inputId: "regPassword", iconId: "togglePassword" },
+    { inputId: "regConfirmPassword", iconId: "toggleConfirmPassword" }
+  ];
+
+  toggles.forEach(({ inputId, iconId }) => {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId)?.querySelector("i");
+
+    if (input && icon) {
+      document.getElementById(iconId).addEventListener("click", () => {
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+      });
+    }
+  });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   authenticate();
-
+  setupPasswordToggles();
   $(document).on("submit", "#loginForm", Login);
   $(document).on("submit", "#registerForm", Register);
   $(document).on("click", "#logoutBtn", Logout);

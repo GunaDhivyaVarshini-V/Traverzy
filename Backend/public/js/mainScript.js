@@ -122,8 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       errorDiv.textContent = ""; // Clear previous errors
-      // Proceed with fetch/axios login request here...
-      console.log("Login valid!"); // TEMP
+      console.log("Login valid!");
     });
 
     // REGISTER VALIDATION
@@ -146,12 +145,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      errorDiv.textContent = ""; // Clear previous
-      // Proceed with register fetch call...
-      console.log("Register valid!"); // TEMP
+      errorDiv.textContent = ""; 
+      console.log("Register valid!");
     });
 
-    // Email format validator
     function validateEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
@@ -297,10 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPackages(packageData);
   });
 });
-// Helper to validate email
-function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
 
 // Display inline error
 function showError(elemId, message) {
@@ -314,8 +307,7 @@ function clearError(elemId) {
   if (el) el.textContent = "";
 }
 
-// Attach validation logic
-function attachValidation() {
+function formValidation() {
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");
 
@@ -334,8 +326,8 @@ function attachValidation() {
     }
     clearError("loginError");
 
-    // TODO: Replace console.log with your fetch call
-    console.log("✅ Login valid:", { email, password });
+   
+    console.log("Login valid:", { email, password });
   });
 
   registerForm?.addEventListener("submit", (e) => {
@@ -356,11 +348,10 @@ function attachValidation() {
     clearError("registerError");
 
     // TODO: Replace console.log with your fetch call
-    console.log("✅ Register valid:", { name, email, password, role });
+    console.log("Register valid:", { name, email, password, role });
   });
 }
 
-// Initialize after DOM and bootstrap scripts
 document.addEventListener("DOMContentLoaded", () => {
-  attachValidation();
+  formValidation();
 });

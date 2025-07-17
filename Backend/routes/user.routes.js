@@ -16,4 +16,6 @@ router.get("/user/:email", userController.getUserByEmail);
 router.put("/user/:userId", userController.updateUser);
 router.delete("/user/:userId", userController.deleteUser);
 router.get("/dashboard", userController.renderDashboard);
+router.get("/bookingDetails",userController.renderBookingDetails);
+router.get("/approvePackages",userController.approvePackages);
 module.exports = router;

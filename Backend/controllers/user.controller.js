@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user");
-
+const packageModel = require("../models/trending_packages");
 const secret = "jwt_token";
 
 //Dashboard
@@ -16,6 +16,22 @@ exports.renderDashboard = async (req, res) => {
   }
 };
 
+exports.approvePackages = async (req, res) => {
+  try {
+    const packages = await packageModel.find(); 
+    res.render("approvePackages", { packages }); 
+  } catch (error) {
+    console.error("Error loading approvePackages:", error);
+    res.status(500).json({ message: "Error rendering approvePackages page", error });
+  }
+};
+exports.renderBookingDetails= async (req, res) => {
+  try {
+    res.render("bookingDetails");
+  } catch (error) {
+    res.status(500).json({ message: "Error rendering booked packages", error });
+  }
+};
 //register
 exports.register = async (req, res) => {
   const { name, email, password, role } = req.body;
