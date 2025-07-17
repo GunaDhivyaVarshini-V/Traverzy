@@ -100,6 +100,62 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Can't receive nav data:", err);
   });
 
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    // LOGIN VALIDATION
+    loginForm?.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      const errorDiv = document.getElementById("loginError");
+
+      if (!email || !password) {
+        errorDiv.textContent = "Please enter both email and password.";
+        return;
+      }
+
+      // optionally add email format check
+      if (!validateEmail(email)) {
+        errorDiv.textContent = "Please enter a valid email.";
+        return;
+      }
+
+      errorDiv.textContent = ""; // Clear previous errors
+      // Proceed with fetch/axios login request here...
+      console.log("Login valid!"); // TEMP
+    });
+
+    // REGISTER VALIDATION
+    registerForm?.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("regName").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value.trim();
+      const role = document.getElementById("regRole").value;
+
+      const errorDiv = document.getElementById("registerError");
+      if (!name || !email || !password || !role) {
+        errorDiv.textContent = "All fields are required.";
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        errorDiv.textContent = "Please enter a valid email.";
+        return;
+      }
+
+      errorDiv.textContent = ""; // Clear previous
+      // Proceed with register fetch call...
+      console.log("Register valid!"); // TEMP
+    });
+
+    // Email format validator
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
 
   // Trending Cards
   fetch("http://localhost:3000/api/v1/trendingImages")
@@ -240,4 +296,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderPackages(packageData);
   });
+});
+// Helper to validate email
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Display inline error
+function showError(elemId, message) {
+  const el = document.getElementById(elemId);
+  if (el) el.textContent = message;
+}
+
+// Clear errors
+function clearError(elemId) {
+  const el = document.getElementById(elemId);
+  if (el) el.textContent = "";
+}
+
+// Attach validation logic
+function attachValidation() {
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
+
+  loginForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    if (!email || !password) {
+      showError("loginError", "Please enter both email and password.");
+      return;
+    }
+    if (!validateEmail(email)) {
+      showError("loginError", "Please enter a valid email.");
+      return;
+    }
+    clearError("loginError");
+
+    // TODO: Replace console.log with your fetch call
+    console.log("✅ Login valid:", { email, password });
+  });
+
+  registerForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value.trim();
+    const role = document.getElementById("regRole").value;
+
+    if (!name || !email || !password || !role) {
+      showError("registerError", "All fields are required.");
+      return;
+    }
+    if (!validateEmail(email)) {
+      showError("registerError", "Please enter a valid email.");
+      return;
+    }
+    clearError("registerError");
+
+    // TODO: Replace console.log with your fetch call
+    console.log("✅ Register valid:", { name, email, password, role });
+  });
+}
+
+// Initialize after DOM and bootstrap scripts
+document.addEventListener("DOMContentLoaded", () => {
+  attachValidation();
 });

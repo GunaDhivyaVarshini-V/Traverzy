@@ -1,7 +1,6 @@
-include ./includes/header
-include ./includes/navbar
+extends ./layout
 
-block styles
+//- block styles
   link(href="/css/style.css" rel="stylesheet")
   link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
   link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
@@ -9,101 +8,91 @@ block styles
 
 block body
   #navbarContainer
-  header.hero#hero
-    .slider
-      img(src="/images/bg_image1.jpg" alt="Slide 1")
-      img(src="/images/hero-place2.jpg" alt="Slide 2")
-      img(src="/images/hero-place1.jpg" alt="Slide 3")
-    .overlay
-      h1 Explore Exotic Places
-      p Countless Memories!
-      .search-bar
-        input(type="text" placeholder="Enter Your Dream Destination!")
-        button Search
-      .theme-items
-        span(onclick="showTheme('group')") Group Departure
-        span(onclick="showTheme('honeymoon')") Honeymoon
-        span(onclick="showTheme('pilgrimage')") Pilgrimage
-        span(onclick="showTheme('ayurveda')") Ayurveda
-        span(onclick="showTheme('luxury')") Luxury
-        span(onclick="showTheme('adventure')") Adventure
-      #destination-suggestion
-        br
-        a(href="#filter-home")
-          p Not Sure?
-      .hero-slide-controls(style="text-align: center")
-        span.dot
-        span.dot
-        span.dot
+  .page-content
+    header.hero#hero
+      .slider
+        img(src="/images/bg_image1.jpg" alt="Slide 1")
+        img(src="/images/hero-place2.jpg" alt="Slide 2")
+        img(src="/images/hero-place1.jpg" alt="Slide 3")
+      .overlay
+        h1 Explore Exotic Places
+        p Countless Memories!
+        .search-bar
+          input(type="text" placeholder="Enter Your Dream Destination!")
+          button Search
+        .theme-items
+          span(onclick="showTheme('group')") Group Departure
+          span(onclick="showTheme('honeymoon')") Honeymoon
+          span(onclick="showTheme('pilgrimage')") Pilgrimage
+          span(onclick="showTheme('ayurveda')") Ayurveda
+          span(onclick="showTheme('luxury')") Luxury
+          span(onclick="showTheme('adventure')") Adventure
+        #destination-suggestion
+          br
+          a(href="#filter-home")
+            p Not Sure?
+        .hero-slide-controls(style="text-align: center")
+          span.dot
+          span.dot
+          span.dot
 
-  main
-   section.theme-display
-    each theme in ['group', 'honeymoon', 'pilgrimage', 'ayurveda', 'luxury', 'adventure']
-      div(id=`${theme}-content`, style="display: none")
-        h2= theme.charAt(0).toUpperCase() + theme.slice(1) + ' Departure'
-        .trending-cards-container(id=`${theme}-cards`)
+    main
+    section.theme-display
+      each theme in ['group', 'honeymoon', 'pilgrimage', 'ayurveda', 'luxury', 'adventure']
+        div(id=`${theme}-content`, style="display: none")
+          h2= theme.charAt(0).toUpperCase() + theme.slice(1) + ' Departure'
+          .trending-cards-container(id=`${theme}-cards`)
 
 
-    #theme-section
+      #theme-section
 
-    section
-      .trending-section#themes
-        h2 Trending Tourist Packages
-        .trending-cards-container#trending-cards
+      section
+        .trending-section#themes
+          h2 Trending Tourist Packages
+          .trending-cards-container#trending-cards
 
-    section#filter-home
-      h2.filter-title Search Holiday Packages by Duration, Season & Budget
-      .duration-slider
-        p.text-center Best priced packages for your holiday
-          strong DURATION
-        .slider-bar
-          span.step.active(data-duration="0", style="width: 5rem; text-align: center") All
-          span.step(data-duration="1-3") 1 to 3 Days
-          span.step(data-duration="4-6") 4 to 6 Days
-          span.step(data-duration="7-9") 7 to 9 Days
-          span.step(data-duration="10-12") 10 to 12 Days
-          span.step(data-duration="13+") 13 Days or More
+      section#filter-home
+        h2.filter-title Search Holiday Packages by Duration, Season & Budget
+        .duration-slider
+          p.text-center Best priced packages for your holiday
+            strong DURATION
+          .slider-bar
+            span.step.active(data-duration="0", style="width: 5rem; text-align: center") All
+            span.step(data-duration="1-3") 1 to 3 Days
+            span.step(data-duration="4-6") 4 to 6 Days
+            span.step(data-duration="7-9") 7 to 9 Days
+            span.step(data-duration="10-12") 10 to 12 Days
+            span.step(data-duration="13+") 13 Days or More
 
-       .season-filter
-        p
-          strong Expert picks for each SEASON
-        label
-          input(type="radio" name="season" value="JFM")
-          | Jan-Feb-Mar
-        label
-          input(type="radio" name="season" value="APM")
-          | Apr-May-Jun
-        label
-          input(type="radio" name="season" value="JAS")
-          | Jul-Aug-Sep
-        label
-          input(type="radio" name="season" value="OND")
-          | Oct-Nov-Dec
+        .season-filter
+          p
+            strong Expert picks for each SEASON
+          label
+            input(type="radio" name="season" value="JFM")
+            | Jan-Feb-Mar
+          label
+            input(type="radio" name="season" value="APM")
+            | Apr-May-Jun
+          label
+            input(type="radio" name="season" value="JAS")
+            | Jul-Aug-Sep
+          label
+            input(type="radio" name="season" value="OND")
+            | Oct-Nov-Dec
 
-      .budget-filter
-        label(for="budget-select") Choose Budget:
-        select#budget-select
-          option(value="all") All
-          option(value="below-10000") Below ₹10,000
-          option(value="10000-25000") ₹10,000–₹25,000
-          option(value="25000-50000") ₹25,000–₹50,000
-          option(value="above-50000") Above ₹50,000
-        span.clear-button
-          button#clear-filters ❌
+        .budget-filter
+          label(for="budget-select") Choose Budget:
+          select#budget-select
+            option(value="all") All
+            option(value="below-10000") Below ₹10,000
+            option(value="10000-25000") ₹10,000–₹25,000
+            option(value="25000-50000") ₹25,000–₹50,000
+            option(value="above-50000") Above ₹50,000
+          span.clear-button
+            button#clear-filters ❌
 
-      .package-carousel#package-cards(style="margin: 0px 5rem")
-
-  footer.site-footer
-    p &copy; 2025 Traverzy. All Rights Reserved
-    p
-      a(href="#") Privacy Policy
-      | &nbsp;&nbsp;
-      a(href="#") Terms of Use
+        .package-carousel#package-cards(style="margin: 0px 5rem")
 
 block scripts
-  script(src="https://code.jquery.com/jquery-3.7.1.min.js")
-  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js")
-  script(src="/js/mainScript.js")
-  script(src="/js/authentication.js")
   script.
    window.addEventListener("DOMContentLoaded", authenticate);

@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const userModel =require("./models/user")
+// const userModel =require("./models/user")
+// const homePackagesModel=require("./models/home_Packages")
+// const trendingPackagesModel=require('./models/trending_packages')
 const path = require("path");
 const app = express();
 // const session = require("express-session");
@@ -19,11 +21,21 @@ mongoose.connect('mongodb://localhost:27017/Traverzy')
 })
 
 
-userModel.find({})
-.then((users)=>{console.log(users)})
-.catch(err=>{
-  console.error("cannot fetch user",err.message)
-})
+// userModel.find({})
+// .then((users)=>{console.log(users)})
+// .catch(err=>{
+//   console.error("cannot fetch user",err.message)
+// })
+// homePackagesModel.find({})
+// .then((g)=>{console.log(g)})
+// .catch(err=>{
+//   console.error("cannot fetch user",err.message)
+// })
+// trendingPackagesModel.find({})
+// .then((p)=>{console.log(p)})
+// .catch(err=>{
+//   console.error("cannot fetch user",err.message)
+// })
 // app.use(session({
 //   secret: "secret",
 //   resave: false,
@@ -54,7 +66,12 @@ app.get('/packages', (req, res) => {
     "title":"Packages"
   }); 
 });
-
+app.get('/bookingPage',(req,res)=>{
+  res.render("bookingPage")
+})
+app.get('/add-package', (req, res) => {
+  res.render('travelAgent');
+});
 //routes
 
 const navRoutes = require("./routes/nav.routes");

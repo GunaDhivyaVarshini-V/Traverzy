@@ -1,80 +1,61 @@
-include ./header
 
-block styles
-  link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css")
-  link(href="/css/style.css", rel="stylesheet")
-block body
-  // Navbar Section
-  div#navbarContainer
-  nav.navbar
-    img.logo(src="/images/Logo.png", alt="Logo")
-    ul.menu#menu
-    button.btn.login-btn#loginBtn(
-      type="button",
-      data-bs-toggle="modal",
-      data-bs-target="#loginModal"
-    ) Login
-  //Login Modal
-  .modal.fade#loginModal(tabindex="-1", aria-labelledby="loginModalLabel", aria-hidden="true")
-    .modal-dialog.modal-dialog-centered
-      .modal-content
-        .modal-header
-          h5.modal-title#loginModalLabel Login
-          button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-        .modal-body
-          form#loginForm
+//- Navbar Section
+nav.navbar
+  img.logo(src="/images/Logo.png", alt="Logo")
+  ul.menu#menu
+  button.btn.login-btn#loginBtn(
+    type="button",
+    data-bs-toggle="modal",
+    data-bs-target="#loginModal"
+  ) Login
 
-            .mb-3
-              label.form-label(for="loginEmail") Email address
-              input#loginEmail.form-control(type="email", placeholder="name@example.com")
-            .mb-3
-              label.form-label(for="loginPassword") Password
-              input#loginPassword.form-control(type="password", placeholder="••••••••")
-            button.btn.btn-primary.w-100(type="submit") Login
-            p.text-center.mt-3 Don't have an account? 
-              a(
-                href="#",
-                data-bs-toggle="modal",
-                data-bs-target="#registerModal",
-                data-bs-dismiss="modal"
-              ) Create one
-          #loginError.text-danger.mt-2.text-center
+// Login Modal
+.modal.fade#loginModal(tabindex="-1", aria-labelledby="loginModalLabel", aria-hidden="true")
+  .modal-dialog.modal-dialog-centered
+    .modal-content
+      .modal-header
+        h5.modal-title#loginModalLabel Login
+        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form#loginForm(novalidate)
+          .mb-3
+            label.form-label(for="loginEmail") Email address
+            input#loginEmail.form-control(type="email", placeholder="name@example.com")
+          .mb-3
+            label.form-label(for="loginPassword") Password
+            input#loginPassword.form-control(type="password", placeholder="••••••••")
+          button.btn.btn-primary.w-100(type="submit") Login
+          p.text-center.mt-3
+            | Don't have an account? 
+            a(href="#", data-bs-toggle="modal", data-bs-target="#registerModal", data-bs-dismiss="modal") Create one
+        #loginError.text-danger.mt-2.text-center
 
-  //Register Modal
-  .modal.fade#registerModal(tabindex="-1", aria-labelledby="registerModalLabel", aria-hidden="true")
-    .modal-dialog.modal-dialog-centered
-      .modal-content
-        .modal-header
-          h5.modal-title#registerModalLabel Create Account
-          button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-        .modal-body
-          form#registerForm
-            .mb-3
-              label.form-label(for="regName") Full Name
-              input#regName.form-control(type="text", placeholder="Your Name", required)
-            .mb-3
-              label.form-label(for="regEmail") Email address
-              input#regEmail.form-control(type="email", placeholder="name@example.com", required)
-            .mb-3
-              label.form-label(for="regPassword") Password
-              input#regPassword.form-control(type="password", placeholder="••••••••", required)
-            .mb-3
-              label.form-label(for="regRole") Select Role
-              select#regRole.form-control(required)
-                option(value="") Choose your role
-                option(value="user") User
-                option(value="agent") Travel Agent
-            button.btn.btn-success.w-100(type="submit") Sign Up
-          p.text-center.mt-3 Already have an account? 
-            a(
-              href="#",
-              data-bs-toggle="modal",
-              data-bs-target="#loginModal",
-              data-bs-dismiss="modal"
-            ) Login
-
-  //script
-  script(src="https://code.jquery.com/jquery-3.7.1.min.js")
-  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js")
-  script(src="/js/mainScript.js")
-  script(src="/js/authentication.js")
+// Register Modal
+.modal.fade#registerModal(tabindex="-1", aria-labelledby="registerModalLabel", aria-hidden="true")
+  .modal-dialog.modal-dialog-centered
+    .modal-content
+      .modal-header
+        h5.modal-title#registerModalLabel Create Account
+        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+      .modal-body
+        form#registerForm(novalidate)
+          .mb-3
+            label.form-label(for="regName") Full Name
+            input#regName.form-control(type="text", placeholder="Your Name", required)
+          .mb-3
+            label.form-label(for="regEmail") Email address
+            input#regEmail.form-control(type="email", placeholder="name@example.com", required)
+          .mb-3
+            label.form-label(for="regPassword") Password
+            input#regPassword.form-control(type="password", placeholder="••••••••", required)
+          .mb-3
+            label.form-label(for="regRole") Select Role
+            select#regRole.form-control(required)
+              option(value="") Choose your role
+              option(value="user") User
+              option(value="agent") Travel Agent
+          button.btn.btn-success.w-100(type="submit") Sign Up
+        #registerError.text-danger.mt-2.text-center
+        p.text-center.mt-3
+          | Already have an account? 
+          a(href="#", data-bs-toggle="modal", data-bs-target="#loginModal", data-bs-dismiss="modal") Login

@@ -4,7 +4,7 @@ function getToken() {
 
 // Loads all users and renders the admin dashboard
 function loadAdminDashboard() {
-   const token = getToken();
+  const token = getToken();
   console.log("TOKEN:frmadmin", token);
   if (!token) return;
   console.log("Calling /all-users with token:", token);
@@ -33,8 +33,8 @@ function loadAdminDashboard() {
   <td>${user.email}</td>
   <td>${user.role}</td>
   <td>
-    <button class="admin-btn btn-edit" onclick="editUser('${user.email}')">Edit</button>
-    <button class="admin-btn btn-delete" onclick="deleteUser('${user.email}')">Delete</button>
+    <button class="admin-btn btn-edit" onclick="editUser('${user.userId}')">Edit</button>
+    <button class="admin-btn btn-delete" onclick="deleteUser('${user.userId}')">Delete</button>
   </td>
 `;
         tbody.appendChild(row);

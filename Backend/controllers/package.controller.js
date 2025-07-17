@@ -1,17 +1,21 @@
 const frontendData = require("../dataModels/frontendDatas");
-const fs = require("fs");
-const path = require("path");
-
-exports.getTrendingImages = (req, res) => {
-  const filePath = path.join(__dirname, "..", "data", "trendingData.json");
-  fs.readFile(filePath, "utf-8", (err, data) => {
-    if (err) {
-      return res.status(500).json({ error: "Failed to read Trending Data" });
-    }
-    res.status(200).json(JSON.parse(data));
-  });
+const trendingPackagesModel=require("../models/trending_packages")
+const homePackagesModel=require("../models/home_Packages")
+exports.getTrendingImages = async(req, res) => {
+ try{ 
+  const trendingData = await trendingPackagesModel.find();
+  res.status(200).json(trendingData);
+  }
+  catch(error){
+    res.status(500).json({message:"Error fetching Trending Packages from DB"})
+  }
 };
 
-exports.getPackages = (req, res) => {
-  res.status(200).json(frontendData.packageData);
+exports.getPackages = async(req, res) => {
+ try {
+    const packages = await homePackagesModel.find();
+    res.status(200).json(packages);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch packages from DB" });
+  }
 };

@@ -9,6 +9,10 @@ body {
   margin: 0;
   font-family: "open-sans", sans-serif;
 }
+.page-content {
+  padding-top: 50px; 
+
+}
 /* navbar */
 .navbar {
   display: flex;
@@ -495,18 +499,18 @@ footer p a {
 .menu .item a:hover {
   color: #2258c3;
 }
-/* .navbar {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  min-height: 50px !important;
-}
-.logo {
-  width: 9rem;
-}
-.navbar {
+html, body {
+  height: 100%;
   display: flex;
-  align-items: center;
-  height: 20px;
-  padding: 0 30px;
-  background: white;
-} */
+  flex-direction: column;
+}
+
+body {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+  padding: 15px 0;
+  text-align: center;
+}

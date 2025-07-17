@@ -92,7 +92,13 @@ exports.getCurrentUser = (req, res) => {
 // Get All Users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await userModel.find();
+      const usersRaw = await userModel.find(); 
+    const users = usersRaw.map((u) => ({
+      name: u.name,
+      email: u.email,
+      role: u.role,
+      userId: u.userId, 
+    }));
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "Error fetching users", error });
