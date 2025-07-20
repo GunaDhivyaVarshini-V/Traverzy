@@ -163,8 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
       trendingData.forEach((pkg) => {
         const card = document.createElement("div");
         card.className = "trending-card";
+        const bookingUrl = `/bookingPage/${pkg._id}`;
         card.innerHTML = `
-          <a href="${pkg.link}">
+          <a href="${bookingUrl}">
             <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
             <div class="trending-card-content">
               <h4><b>${pkg.title}</b></h4>

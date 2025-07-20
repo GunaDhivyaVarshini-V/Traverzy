@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 // const trendingPackagesModel=require('./models/trending_packages')
 const path = require("path");
 const app = express();
-// const session = require("express-session");
+const session = require("express-session");
 const cookieParser = require("cookie-parser");
 
 app.set('view engine','jade')//setting jade as view engine
@@ -20,33 +20,6 @@ mongoose.connect('mongodb://localhost:27017/Traverzy')
   console.error("mongodb connection failed",err.message)
 })
 
-
-// userModel.find({})
-// .then((users)=>{console.log(users)})
-// .catch(err=>{
-//   console.error("cannot fetch user",err.message)
-// })
-// homePackagesModel.find({})
-// .then((g)=>{console.log(g)})
-// .catch(err=>{
-//   console.error("cannot fetch user",err.message)
-// })
-// trendingPackagesModel.find({})
-// .then((p)=>{console.log(p)})
-// .catch(err=>{
-//   console.error("cannot fetch user",err.message)
-// })
-// app.use(session({
-//   secret: "secret",
-//   resave: false,
-//   saveUninitialized: false, 
-//   cookie: {
-//     httpOnly: true,
-//     maxAge:1000*60*60,
-//     secure: false,
-
-//   },
-// }));
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -66,9 +39,19 @@ app.get('/packages', (req, res) => {
     "title":"Packages"
   }); 
 });
-app.get('/bookingPage',(req,res)=>{
-  res.render("bookingPage")
-})
+app.use('/bookingPage/:packageId', async (req, res) => {
+  const packageId = req.params.packageId; 
+  try {
+    const selectedPackage = await trendingPackages.findById(packageId);
+    if (!selectedPackage) {
+      return res.status(404).send('Package not found');
+    }
+    res.render('bookingPage', { selectedPackage });
+  } catch (error) {
+    res.status(500).send('Error loading package details');
+  }
+});
+
 app.get('/add-package', (req, res) => {
   res.render('travelAgent');
 });
@@ -79,7 +62,6 @@ const packageRoutes = require("./routes/package.routes");
 const trendingRoutes = require("./routes/trending.routes");
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
-
 const apiVersion="/api/v1"
 
 
@@ -87,6 +69,7 @@ app.use(apiVersion + "/auth", authRoutes);
 app.use(apiVersion+"/nav", navRoutes);
 app.use(apiVersion+"/packageImages", packageRoutes);
 app.use(apiVersion+"/trendingImages", trendingRoutes);
+// app.use("/bookingPackages",trendingRoutes)
 app.use(apiVersion+"/users", userRoutes);
 
 

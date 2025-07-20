@@ -1,4 +1,4 @@
-extend ./layout
+extends ./layout
 
 block styles
   link(rel="stylesheet", href="/css/style.css")
@@ -8,101 +8,79 @@ block styles
 block body
   #nav-bar
   header.hero
-    .slider
-      img(src="/images/italy.jpg", alt="Slide 1")
-      img(src="/images/italy2.jpg", alt="Slide 2")
-      img(src="/images/italy3.jpg", alt="Slide 3")
+    .carousel.slide#homeCarousel(data-bs-ride="carousel")
+      .carousel-inner
+        .carousel-item.active
+          img(src="/images/italy.jpg", class="d-block w-100", alt="Slide 1")
+        .carousel-item
+          img(src="/images/italy2.jpg", class="d-block w-100", alt="Slide 2")
+        .carousel-item
+          img(src="/images/italy3.jpg", class="d-block w-100", alt="Slide 3")
+    button.carousel-control-prev(type="button", data-bs-target="#homeCarousel", data-bs-slide="prev")
+      span.carousel-control-prev-icon(aria-hidden="true")
+      span.sr-only Previous
+    button.carousel-control-next(type="button", data-bs-target="#homeCarousel", data-bs-slide="next")
+      span.carousel-control-next-icon(aria-hidden="true")
+      span.sr-only Next
     .overlay#destination-herotext
-      h1 Lake como, Italy
-      p Home to romantic villas and revamped waterfront promenades
+      h1= selectedPackage.title
+      p= selectedPackage.destination
+
   main
-    section.package-details
-      h2 Package Details
-      p
-        strong Duration:
-        |  5 Days / 4 Nights
-      ul
-        li 🏞 Scenic tours and local experiences
-        li 🏨 Comfortable accommodation
-        li 🚍 Guided transport
-      h2 Price & Inclusions
-      p
-        strong Total Cost:
-        |  ₹75,000 per person
-      ul
-        li ✅ Daily breakfast & dinner
-        li ✅ Entry tickets for attractions
-        li ✅ Airport pickup & drop
-      h2 What’s Not Included
-      ul
-        li ❌ Airfare from home city (unless selected)
-        li ❌ Personal expenses
-        li ❌ Travel Insurance
-      button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#staticBackdrop") Book now
+    .container
+      section.package-details
+        h2 Package Details
+        p
+          strong Duration:
+          |  #{selectedPackage.duration}
+        ul
+          li 🏞 Scenic tours and local experiences
+          li 🏨 Comfortable accommodation
+          li 🚍 Guided transport
+        h2 Price & Inclusions
+        p
+          strong Total Cost:
+          |  ₹#{selectedPackage.price} per person
+        ul
+          li ✅ Daily breakfast & dinner
+          li ✅ Entry tickets for attractions
+          li ✅ Airport pickup & drop
+        h2 What’s Not Included
+        ul
+          li ❌ Airfare from home city (unless selected)
+          li ❌ Personal expenses
+          li ❌ Travel Insurance
+       
+        // Booking form 
+        form(action="/bookingPage/#{selectedPackage._id}", method="POST")
+          .mb-3
+            label(for="firstName") First Name:
+            input.form-control(type="text", name="firstName", id="firstName")
+          .mb-3
+            label(for="lastName") Last Name:
+            input.form-control(type="text", name="lastName", id="lastName")
+          .mb-3
+            label(for="bookingEmail") Email:
+            input.form-control(type="email", name="bookingEmail", id="bookingEmail")
+          .mb-3
+            label(for="fromDate") From Date:
+            input.form-control(type="date", name="fromDate", id="fromDate")
+          .mb-3
+            label(for="toDate") To Date:
+            input.form-control(type="date", name="toDate", id="toDate")
+          .mb-3
+            label(for="numPersons") Number of Persons:
+            input.form-control(type="number", name="numPersons", id="numPersons", min="1", placeholder="Enter number of persons")
 
-  // Modal structure fixed: modal-dialog inside modal.fade
-  .modal.fade#staticBackdrop(tabindex="-1", aria-labelledby="staticBackdropLabel", aria-hidden="true")
-    .modal-dialog#package-form
-      .modal-content
-        .modal-header
-          h5.modal-title#staticBackdropLabel Enter the Details
-          button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-        .modal-body
-          form(action="#")
-            .mb-3
-              label(for="firstName") First Name:
-              input.form-control(type="text", name="firstName", id="firstName")
-              br
-              small#nameError.text-danger
-            .mb-3
-              label(for="lastName") Last Name:
-              input.form-control(type="text", name="lastName", id="lastName")
-            .mb-3
-              label(for="bookingEmail") Email:
-              input.form-control(type="email", name="bookingEmail", id="bookingEmail")
-            .mb-3
-              label(for="fromDate") From Date:
-              input.form-control(type="date", name="fromDate", id="fromDate")
-            .mb-3
-              label(for="toDate") To Date:
-              input.form-control(type="date", name="toDate", id="toDate")
-            .mb-3
-              label(for="numPersons") Number of Persons:
-              input.form-control(type="number", name="numPersons", id="numPersons", min="1", placeholder="Enter number of persons")
-        .modal-footer
-          button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
-          button.btn.btn-primary(type="submit") Next
+          // Hidden input to pass package _id to backend
+          input(type="hidden", name="packageId", value=selectedPackage._id)
 
-    section.package-details
-      h2 Customize Your Package
-      form.customization-form
-        label(for="hotel") Hotel Type:
-        select#hotel(name="hotel")
-          option(value="3star") 3 Star
-          option(value="4star") 4 Star
-          option(value="5star") 5 Star
+          button.btn.btn-primary(type="submit") Book Now
 
-        label(for="food") Food Preference:
-        select#food(name="food")
-          option(value="veg") Vegetarian
-          option(value="nonveg") Non-Vegetarian
-          option(value="both") Both
-
-        label(for="transport") Transport Mode:
-        select#transport(name="transport")
-          option(value="flight") Flight
-          option(value="train") Train
-          option(value="bus") Bus
-
-        button(type="submit", id="customization-id") Confirm Customization
-
-    section.gallery
-      h2 Image Gallery
-      .gallery-grid
-        each img in ["italy.jpg", "italy2.jpg", "italy3.jpg", "group1.jpg", "group2.webp", "group3.jpg"]
-          img(src=`/images/${img}`, alt="Italy View")
-
-block scripts
-  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js")
-  script(src="/js/script.js")
-  script(src="/js/bookingPage.js")
+      // Image Gallery 
+      section.gallery
+        h2 Image Gallery
+        .gallery-grid
+          each img in ["italy.jpg", "italy2.jpg", "italy3.jpg", "group1.jpg", "group2.webp", "group3.jpg"]
+            .gallery-item
+              img(src=`/images/${img}`, alt="Italy View")

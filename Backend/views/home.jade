@@ -1,10 +1,10 @@
 extends ./layout
 
 //- block styles
-  link(href="/css/style.css" rel="stylesheet")
-  link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
-  link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
-  link(href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet")
+link(href="/css/style.css" rel="stylesheet")
+link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
+link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
+link(href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet")
 
 block body
   #navbarContainer
@@ -21,12 +21,10 @@ block body
           input(type="text" placeholder="Enter Your Dream Destination!")
           button Search
         .theme-items
-          span(onclick="showTheme('group')") Group Departure
-          span(onclick="showTheme('honeymoon')") Honeymoon
-          span(onclick="showTheme('pilgrimage')") Pilgrimage
-          span(onclick="showTheme('ayurveda')") Ayurveda
-          span(onclick="showTheme('luxury')") Luxury
-          span(onclick="showTheme('adventure')") Adventure
+          - themes = ['group', 'honeymoon', 'pilgrimage', 'ayurveda', 'luxury', 'adventure']
+          each theme in themes
+            span(onclick=`showTheme('${theme}')`) #{theme.charAt(0).toUpperCase() + theme.slice(1)}
+
         #destination-suggestion
           br
           a(href="#filter-home")
@@ -42,7 +40,6 @@ block body
         div(id=`${theme}-content`, style="display: none")
           h2= theme.charAt(0).toUpperCase() + theme.slice(1) + ' Departure'
           .trending-cards-container(id=`${theme}-cards`)
-
 
       #theme-section
 
@@ -95,4 +92,4 @@ block body
 
 block scripts
   script.
-   window.addEventListener("DOMContentLoaded", authenticate);
+    window.addEventListener("DOMContentLoaded", authenticate);
