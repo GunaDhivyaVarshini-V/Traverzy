@@ -514,3 +514,17 @@ footer {
   padding: 15px 0;
   text-align: center;
 }
+/*Travel Agent add package page*/
+.tab-content > .tab-pane {
+  background-color: white !important;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+.nav-tabs .nav-link {
+  color: #333; 
+}
+.nav-tabs .nav-link.active {
+  color: #000; 
+}

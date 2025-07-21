@@ -1,38 +1,50 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user");
-const packageModel = require("../models/trending_packages");
+const packageModel = require("../models/packages");
 const secret = "jwt_token";
 
-//Dashboard
+/**
+ * Renders the admin dashboard with a list of users
+ */
 exports.renderDashboard = async (req, res) => {
   try {
     const users = await userModel.find();
     res.render("admin", {
       users,
-      currentUser: req.user || null
+      currentUser: req.session.user || null,
     });
   } catch (error) {
     res.status(500).json({ message: "Error rendering dashboard", error });
   }
 };
 
+/**
+ * Renders the package approval page
+ */
 exports.approvePackages = async (req, res) => {
   try {
-    const packages = await packageModel.find(); 
-    res.render("approvePackages", { packages }); 
+    const packages = await packageModel.find();
+    res.render("approvePackages", { packages });
   } catch (error) {
     console.error("Error loading approvePackages:", error);
     res.status(500).json({ message: "Error rendering approvePackages page", error });
   }
 };
-exports.renderBookingDetails= async (req, res) => {
+
+/**
+ * Renders the booking details page
+ */
+exports.renderBookingDetails = async (req, res) => {
   try {
     res.render("bookingDetails");
   } catch (error) {
     res.status(500).json({ message: "Error rendering booked packages", error });
   }
 };
-//register
+
+/**
+ * Registers a new user after checking email availability
+ */
 exports.register = async (req, res) => {
   const { name, email, password, role } = req.body;
 
@@ -47,7 +59,7 @@ exports.register = async (req, res) => {
       name,
       email,
       password,
-      role
+      role,
     });
 
     await newUser.save();
@@ -57,7 +69,9 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login
+/**
+ * Logs in a user and sets session and token cookies
+ */
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -67,12 +81,19 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
+    req.session.user = {
+      userId: user.userId || user._id,
+      name: user.name,
+      role: user.role,
+      email: user.email,
+    };
+
     const token = jwt.sign(
       {
-        userId: user.userId,
+        userId: user._id,
         email: user.email,
         role: user.role,
-        name: user.name
+        name: user.name,
       },
       secret,
       { expiresIn: "1h" }
@@ -86,41 +107,72 @@ exports.login = async (req, res) => {
 
     res.json({
       message: "Login successful",
-      user: { name: user.name, role: user.role },token
+      user: { name: user.name, role: user.role },
+      token,
     });
-
   } catch (error) {
     res.status(500).json({ message: "Login failed", error });
   }
 };
-// Logout
+
+/**
+ * Logs out the user by destroying session and removing cookie
+ */
 exports.logout = (req, res) => {
-  res.clearCookie("token");
-  res.json({ message: "Logged out" });
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Logout error:", err);
+      return res.status(500).send("Error logging out");
+    }
+
+    res.clearCookie("token");
+    res.redirect("/home");
+  });
 };
 
-// Get Current User
+/**
+ * Returns the currently logged-in session user
+ */
 exports.getCurrentUser = (req, res) => {
-  if (!req.user)
+  if (!req.session.user) {
     return res.status(401).json({ error: "Not logged in" });
-  res.json({ user: req.user });
+  }
+  res.json({ user: req.session.user });
 };
-// Get All Users
+
+/**
+ * Returns all users based on name, email, and role filters with sorting
+ */
 exports.getAllUsers = async (req, res) => {
   try {
-      const usersRaw = await userModel.find(); 
-    const users = usersRaw.map((u) => ({
-      name: u.name,
-      email: u.email,
-      role: u.role,
-      userId: u.userId, 
-    }));
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching users", error });
+    const {
+      name = "",
+      email = "",
+      role = "",
+      sortBy = "name",
+      order = "asc",
+    } = req.query;
+
+    const query = {
+      name: { $regex: name, $options: "i" },
+      email: { $regex: email, $options: "i" },
+      role: { $regex: role, $options: "i" },
+    };
+
+    const users = await userModel
+      .find(query)
+      .sort({ [sortBy]: order === "asc" ? 1 : -1 });
+
+    res.json(users);
+  } catch (err) {
+    console.error("Error fetching users:", err.message);
+    res.status(500).json({ error: "Server error" });
   }
 };
-// Get User by Email
+
+/**
+ * Returns a user by email
+ */
 exports.getUserByEmail = async (req, res) => {
   try {
     const user = await userModel.findOne({ email: req.params.email });
@@ -130,7 +182,10 @@ exports.getUserByEmail = async (req, res) => {
     res.status(500).json({ message: "Error fetching user", error });
   }
 };
-// Get User by ID
+
+/**
+ * Returns a user by custom userId
+ */
 exports.getUserById = async (req, res) => {
   try {
     const user = await userModel.findOne({ userId: req.params.userId });
@@ -140,7 +195,10 @@ exports.getUserById = async (req, res) => {
     res.status(500).json({ message: "Error fetching user", error });
   }
 };
-// Update User
+
+/**
+ * Updates a user's name and role using userId
+ */
 exports.updateUser = async (req, res) => {
   const { name, role } = req.body;
 
@@ -158,24 +216,24 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ message: "Error updating user", error });
   }
 };
-// Delete User
+
+/**
+ * Deletes a user using userId; logs out if current user deletes self
+ */
 exports.deleteUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
     const deletedUser = await userModel.findOneAndDelete({ userId });
 
-    if (!deletedUser)
-      return res.status(404).json({ error: "User not found" });
+    if (!deletedUser) return res.status(404).json({ error: "User not found" });
 
-    // If the current user is deleting themselves
-    if (req.user && req.user.userId === userId) {
+    if (req.session.user && req.session.user.userId === userId) {
       res.clearCookie("token");
       return res.status(200).json({ message: "You were deleted. Logged out." });
     }
 
     res.json({ message: "User deleted successfully" });
-
   } catch (error) {
     res.status(500).json({ message: "Error deleting user", error });
   }

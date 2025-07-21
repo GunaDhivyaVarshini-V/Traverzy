@@ -1,0 +1,56 @@
+#flightsContainer
+  .flight-entry.border.p-3.mb-3.rounded.bg-light.position-relative
+    h5.mb-3.text-primary Flight 1
+    button.btn-close.position-absolute.top-0.end-0.mt-2.me-2(type="button", onclick="removeEntry(this)", aria-label="Remove flight")
+    .row.mb-2
+      .col-md-6
+        label Airline
+        input.form-control(type="text", name="flights[0][airline]")
+      .col-md-6
+        label Flight Number
+        input.form-control(type="text", name="flights[0][flightNumber]")
+    .row.mb-2
+      .col-md-6
+        label Departure Airport
+        input.form-control(type="text", name="flights[0][departureAirport]")
+      .col-md-6
+        label Arrival Airport
+        input.form-control(type="text", name="flights[0][arrivalAirport]")
+    .row.mb-2
+      .col-md-6
+        label Departure Time
+        input.form-control(type="datetime-local", name="flights[0][departureTime]")
+      .col-md-6
+        label Arrival Time
+        input.form-control(type="datetime-local", name="flights[0][arrivalTime]")
+    .mb-2
+      label Price ($)
+      input.form-control(type="number", name="flights[0][price]")
+
+button.btn.btn-outline-primary(type="button", onclick="addFlight()") + Add Another Flight
+
+script.
+  let flightIndex = 1;
+  function addFlight() {
+    const container = document.getElementById("flightsContainer");
+    const entry = container.querySelector(".flight-entry").cloneNode(true);
+
+    // Reset values and update index
+    entry.querySelectorAll("input").forEach((input) => {
+      input.name = input.name.replace(/\[\d+\]/, `[${flightIndex}]`);
+      input.value = "";
+    });
+    entry.querySelector("h5").innerText = `Flight ${flightIndex + 1}`;
+    container.appendChild(entry);
+    flightIndex++;
+  }
+
+  function removeEntry(button) {
+    const entry = button.closest(".flight-entry");
+    const container = document.getElementById("flightsContainer");
+    if (container.children.length > 1) {
+      entry.remove();
+    } else {
+      alert("At least one flight is required.");
+    }
+  }

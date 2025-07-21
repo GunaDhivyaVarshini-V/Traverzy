@@ -42,9 +42,9 @@ function loadThemeCards(theme) {
       const div = document.createElement("div");
       div.className = "trending-card";
       div.innerHTML = `
-        <img src="${card.image}" alt="${card.title}" loading="lazy"/>
+        <img src="${card.image}" alt="${card.name}" loading="lazy"/>
         <div class="trending-card-content">
-          <p>${card.title}</p>
+          <p>${card.name}</p>
         </div>
       `;
       container.appendChild(div);
@@ -166,10 +166,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const bookingUrl = `/bookingPage/${pkg._id}`;
         card.innerHTML = `
           <a href="${bookingUrl}">
-            <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
+            <img src="${pkg.image}" alt="${pkg.name}" loading="lazy"/>
             <div class="trending-card-content">
-              <h4><b>${pkg.title}</b></h4>
-              <p>${pkg.duration}</p>
+              <h4><b>${pkg.name}</b></h4>
+              <p>${pkg.days} days ${pkg.nights} nights</p>
+              <p style="color:green; font-weight:bold;">₹${pkg.price}</p>
             </div>
           </a>
         `;
@@ -198,10 +199,11 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "package-card";
       card.innerHTML = `
         <a href="${pkg.link}">
-          <img src="${pkg.image}" alt="${pkg.title}" loading="lazy"/>
+          <img src="${pkg.image}" alt="${pkg.name}" loading="lazy"/>
           <div class="trending-card-content">
-            <h4><b>${pkg.title}</b></h4>
-            <p>${pkg.duration}</p>
+            <h4><b>${pkg.name}</b></h4>
+             <p>${pkg.days} days ${pkg.nights} nights</p>
+             <p style="color:green; font-weight:bold;">₹${pkg.price}</p>
           </div>
         </a>
       `;

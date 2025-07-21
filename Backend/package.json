@@ -15,6 +15,7 @@
     "express-session": "^1.18.1",
     "jade": "^1.11.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.16.3"
+    "mongoose": "^8.16.3",
+    "multer": "^2.0.2"
   }
 }

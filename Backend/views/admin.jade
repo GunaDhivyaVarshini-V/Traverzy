@@ -1,4 +1,4 @@
-extend ./layout
+extends ./layout
 
 block styles
   link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css")
@@ -6,10 +6,31 @@ block styles
   link(rel="stylesheet", href="/css/admin.css")
 
 block body
- .page-content
-    h2.admin-title Total Users: 
+  .page-content.container
+    h2.admin-title.mb-4 Total Users:
       span#user-count #{users.length}
 
+    // Search and Sorting row
+    .row.mb-3
+      .col-md-3
+        input#nameSearch.form-control(type="text", placeholder="Search by Name")
+      .col-md-3
+        input#emailSearch.form-control(type="text", placeholder="Search by Email")
+      .col-md-3
+        select#roleSearch.form-select
+          option(value="") Filter by Role
+          option(value="user") User
+          option(value="admin") Admin
+          option(value="agent") Agent
+      .col-md-3.d-flex.gap-2
+        select#sortDropdown.form-select
+          option(value="name") Sort by Name
+          option(value="email") Sort by Email
+          option(value="role") Sort by Role
+        button.btn.btn-outline-secondary(type="button", onclick="toggleSortOrder()")
+          span#sortIcon ▲
+
+    // User table
     table.admin-table.table.table-striped
       thead
         tr
@@ -32,4 +53,7 @@ block body
 block scripts
   script(src="/js/admin.js")
   script.
-    window.addEventListener("DOMContentLoaded", authenticate);
+    window.addEventListener("DOMContentLoaded", () => {
+      authenticate();
+      loadAdminDashboard();
+    });

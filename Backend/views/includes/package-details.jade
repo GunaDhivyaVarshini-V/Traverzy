@@ -1,0 +1,88 @@
+//- Package Details Section
+.row
+  .col-md-6
+    label Package Title
+    input.form-control(type="text", name="name", required)
+  .col-md-6
+    label Category
+    select.form-control(name="category", required)
+      option(value="") Select Category
+      option Adventure
+      option Beach
+      option Honeymoon
+      option Leisure
+      option Pilgrimage
+      option Luxury
+
+.row.mt-3
+  .col-md-6
+    label Destination
+    input.form-control(type="text", name="destination", required)
+  .col-md-6
+    label Package Images (Max 5MB each)
+    input.form-control#images(type="file", name="images", multiple, accept="image/*", required)
+    small.text-muted Upload 1 or more images. Each image must be under 5MB.
+
+.row.mt-3
+  .col-md-6
+    label Price (₹)
+    input.form-control(type="number", name="price",min=0, required)
+  .col-md-6
+    label Discount (₹)
+    input.form-control(type="number", name="discount",min=0)
+
+.row.mt-3
+  .col-md-6
+    label Start Date
+    input.form-control(type="date", name="startDate", required)
+  .col-md-6
+    label End Date
+    input.form-control(type="date", name="endDate", required)
+
+.row.mt-3
+  .col-md-4
+    label Days
+    input.form-control(type="number", name="days", min="1", required)
+  .col-md-4
+    label Nights
+    input.form-control(type="number", name="nights", min="0", required)
+  .col-md-4
+    label Season
+    select.form-control(name="season", required)
+      option(value="") Select
+      option(value="JFM") Jan-Feb-Mar
+      option(value="AMJ") Apr-May-Jun
+      option(value="JAS") Jul-Aug-Sep
+      option(value="OND") Oct-Nov-Dec
+
+//- Food Preferences
+.row.mt-3
+  .col
+    label.mb-2 Food Preferences
+    .form-check
+      input.form-check-input(type="checkbox", name="foodPreferences", value="Vegetarian", id="foodVeg")
+      label.form-check-label(for="foodVeg") Vegetarian
+    .form-check
+      input.form-check-input(type="checkbox", name="foodPreferences", value="Non-Vegetarian", id="foodNonVeg")
+      label.form-check-label(for="foodNonVeg") Non-Vegetarian
+    .form-check
+      input.form-check-input(type="checkbox", name="foodPreferences", value="Jain", id="foodJain")
+      label.form-check-label(for="foodJain") Jain
+    .form-check
+      input.form-check-input(type="checkbox", name="foodPreferences", value="Vegan", id="foodVegan")
+      label.form-check-label(for="foodVegan") Vegan
+
+//- Image file size validation script
+script.
+  document.getElementById('images').addEventListener('change', function (e) {
+    const files = e.target.files;
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].size > maxSize) {
+        alert(`"${files[i].name}" is larger than 5MB and has been rejected.`);
+        e.target.value = ''; // clear file input
+        break;
+      }
+    }
+  });

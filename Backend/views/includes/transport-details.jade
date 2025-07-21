@@ -1,0 +1,41 @@
+#transportationContainer
+  .transport-entry.border.p-3.mb-3.rounded.bg-light
+    h5.mb-3.text-primary Transport 1
+    .row.mb-2
+      .col-md-6
+        label Type
+        input.form-control(type="text", name="transportation[0][type]", placeholder="e.g. Bus, Van, Car")
+      .col-md-6
+        label Price ($)
+        input.form-control(type="number", name="transportation[0][price]")
+    .row.mb-2
+      .col-md-6
+        label Pick-up Location
+        input.form-control(type="text", name="transportation[0][pickUpLocation]")
+      .col-md-6
+        label Drop-off Location
+        input.form-control(type="text", name="transportation[0][dropOffLocation]")
+    .row.mb-2
+      .col-md-6
+        label Pick-up Date & Time
+        input.form-control(type="datetime-local", name="transportation[0][pickUpDateTime]")
+      .col-md-6
+        label Drop-off Date & Time
+        input.form-control(type="datetime-local", name="transportation[0][dropOffDateTime]")
+
+button.btn.btn-outline-primary(type="button", onclick="addTransport()") + Add Another Transport
+
+script.
+  let transportIndex = 1;
+  function addTransport() {
+    const container = document.getElementById("transportationContainer");
+    const entry = container.querySelector(".transport-entry").cloneNode(true);
+    entry.querySelectorAll("input").forEach((input) => {
+      const newName = input.name.replace(/\[\d+\]/, `[${transportIndex}]`);
+      input.name = newName;
+      input.value = "";
+    });
+    entry.querySelector("h5").innerText = `Transport ${transportIndex + 1}`;
+    container.appendChild(entry);
+    transportIndex++;
+  }

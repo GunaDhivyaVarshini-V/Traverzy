@@ -1,14 +1,15 @@
 extends ./layout
 
-//- block styles
-link(href="/css/style.css" rel="stylesheet")
+//-styles
 link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
 link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
 link(href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet")
 
 block body
-  #navbarContainer
+  //- imports navbar from ./layout 
+  #navbarContainer 
   .page-content
+    //- Image carousal/slider with a searchbar.. also has categories of packages to view
     header.hero#hero
       .slider
         img(src="/images/bg_image1.jpg" alt="Slide 1")
@@ -35,6 +36,7 @@ block body
           span.dot
 
     main
+    //- Theme section which will only be displayed if clicked from the above section's theme spans
     section.theme-display
       each theme in ['group', 'honeymoon', 'pilgrimage', 'ayurveda', 'luxury', 'adventure']
         div(id=`${theme}-content`, style="display: none")
@@ -42,12 +44,12 @@ block body
           .trending-cards-container(id=`${theme}-cards`)
 
       #theme-section
-
+      //- shows packages which are currently in trend... based on booking count
       section
         .trending-section#themes
           h2 Trending Tourist Packages
           .trending-cards-container#trending-cards
-
+      //- a filter to choose packages in the home page
       section#filter-home
         h2.filter-title Search Holiday Packages by Duration, Season & Budget
         .duration-slider

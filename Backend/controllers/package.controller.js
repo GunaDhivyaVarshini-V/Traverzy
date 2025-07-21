@@ -1,6 +1,5 @@
-const frontendData = require("../dataModels/frontendDatas");
-const trendingPackagesModel=require("../models/trending_packages")
-const homePackagesModel=require("../models/home_Packages")
+const trendingPackagesModel=require("../models/packages")
+
 exports.getTrendingImages = async(req, res) => {
  try{ 
   const trendingData = await trendingPackagesModel.find();
@@ -13,7 +12,7 @@ exports.getTrendingImages = async(req, res) => {
 
 exports.getPackages = async(req, res) => {
  try {
-    const packages = await homePackagesModel.find();
+    const packages = await trendingPackagesModel.find();
     res.status(200).json(packages);
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch packages from DB" });

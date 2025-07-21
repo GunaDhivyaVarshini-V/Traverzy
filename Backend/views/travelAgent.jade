@@ -2,42 +2,66 @@ extends ./layout
 
 block styles
   link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css")
+  link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css")
   link(rel="stylesheet", href="/css/style.css")
-  link(rel="stylesheet", href="/css/admin.css")
 
 block body
-  .page-content.container
-    h2.admin-title.mt-4.mb-4 Upload New Package
+  .page-content
+    .container.mt-4
+      h2.mb-4 Add New Travel Package
 
-    // Form for uploading a package
-    form#uploadPackageForm(action="/api/v1/package/upload", method="POST", enctype="multipart/form-data")
-      .mb-3
-        label(for="packageName", class="form-label") Package Name
-        input#packageName(type="text", class="form-control", name="packageName", placeholder="Enter package name", required)
-      
-      .mb-3
-        label(for="destination", class="form-label") Destination
-        input#destination(type="text", class="form-control", name="destination", placeholder="Enter destination", required)
-      
-      .mb-3
-        label(for="description", class="form-label") Description
-        textarea#description(class="form-control", name="description", placeholder="Enter package description", rows="4", required)
-      
-      .mb-3
-        label(for="price", class="form-label") Price
-        input#price(type="number", class="form-control", name="price", placeholder="Enter package price", required)
-      
-      .mb-3
-        label(for="guests", class="form-label") No. of Guests
-        input#guests(type="number", class="form-control", name="guests", placeholder="Enter number of guests", required)
-      
-      .mb-3
-        label(for="packageImage", class="form-label") Upload Package Image
-        input#packageImage(type="file", class="form-control", name="packageImage", accept="image/*", required)
-      
-      button.btn.btn-primary(type="submit") Upload Package
+      // Nav Tabs
+      ul.nav.nav-tabs.mb-3(role="tablist")
+        li.nav-item
+          a.nav-link.active(href="#package", data-bs-toggle="tab", role="tab", aria-controls="package", aria-selected="true")
+            i.bi.bi-box-seam.me-1
+            | Package
+        li.nav-item
+          a.nav-link(href="#flights", data-bs-toggle="tab", role="tab", aria-controls="flights", aria-selected="false")
+            i.bi.bi-airplane.me-1
+            | Flights
+        li.nav-item
+          a.nav-link(href="#hotels", data-bs-toggle="tab", role="tab", aria-controls="hotels", aria-selected="false")
+            i.bi.bi-building.me-1
+            | Hotels
+        li.nav-item
+          a.nav-link(href="#activities", data-bs-toggle="tab", role="tab", aria-controls="activities", aria-selected="false")
+            i.bi.bi-map.me-1
+            | Activities
+        li.nav-item
+          a.nav-link(href="#transport", data-bs-toggle="tab", role="tab", aria-controls="transport", aria-selected="false")
+            i.bi.bi-bus-front.me-1
+            | Transport
+        li.nav-item
+          a.nav-link(href="#food", data-bs-toggle="tab", role="tab", aria-controls="food", aria-selected="false")
+            i.bi.bi-egg-fried.me-1
+            | Food
 
-    // Display messages (success/failure)
-    .mt-4
-      p#uploadStatus(style="color: green; display: none;") Package uploaded successfully!
-      p#uploadError(style="color: red; display: none;") Error uploading package. Please try again.
+      // Form begins
+      form#addPackageForm(action="/api/v1/package/upload", method="POST", enctype="multipart/form-data")
+        .tab-content.mt-3
+          .tab-pane.fade.show.active#package
+            include ./includes/package-details
+
+          .tab-pane.fade#flights
+            include ./includes/flight-details
+
+          .tab-pane.fade#hotels
+            include ./includes/hotel-details
+
+          .tab-pane.fade#activities
+            include ./includes/activity-details
+
+          .tab-pane.fade#transport
+            include ./includes/transport-details
+
+          .tab-pane.fade#food
+            include ./includes/food-preferences
+
+        // Submit Button
+        .d-flex.justify-content-end.mt-4
+          button.btn.btn-success(style="min-width: 10rem; margin-bottom:1rem" type="submit")
+            i.bi.bi-check-lg.me-1
+            | Submit Package
+script
+ src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

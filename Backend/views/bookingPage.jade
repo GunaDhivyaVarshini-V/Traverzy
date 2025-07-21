@@ -51,7 +51,7 @@ block body
           li ❌ Personal expenses
           li ❌ Travel Insurance
        
-        // Booking form 
+        //- Booking form 
         form(action="/bookingPage/#{selectedPackage._id}", method="POST")
           .mb-3
             label(for="firstName") First Name:
@@ -72,12 +72,12 @@ block body
             label(for="numPersons") Number of Persons:
             input.form-control(type="number", name="numPersons", id="numPersons", min="1", placeholder="Enter number of persons")
 
-          // Hidden input to pass package _id to backend
+          //- Hidden input to pass package _id to backend
           input(type="hidden", name="packageId", value=selectedPackage._id)
 
           button.btn.btn-primary(type="submit") Book Now
 
-      // Image Gallery 
+      //- Image Gallery 
       section.gallery
         h2 Image Gallery
         .gallery-grid

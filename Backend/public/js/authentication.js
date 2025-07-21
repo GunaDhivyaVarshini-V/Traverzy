@@ -30,6 +30,7 @@ function updateNavbar(user) {
         ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/dashboard">User data</a></li>' : ""}
         ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/bookingDetails">Booking details</a></li>' : ""}
         ${user.role === "admin" ? '<li><a class="dropdown-item" href="/api/v1/users/approvePackages">Manage Package</a></li>' : ""}
+        ${user.role === "agent" ? '<li><a class="dropdown-item" href="/api/v1/add-packages/">add package</a></li>' : ""}
         <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
       </ul>
     </div>

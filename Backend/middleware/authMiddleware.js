@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, secret);
-    req.user = decoded;
+    req.session.user = decoded;
     console.log("Authenticated user:", decoded);
     next();
   } catch (err) {

@@ -1,5 +1,5 @@
 const Booking = require('../models/booking');
-const Package = require('../models/trending_packages'); 
+const Package = require('../models/packages'); 
 
 exports.submitBooking = async (req, res) => {
   const { firstName, lastName, bookingEmail, fromDate, toDate, numPersons, packageId } = req.body;
